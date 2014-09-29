@@ -35,7 +35,7 @@ gulp.task('ngdocs', [], function () {
 });
 ```
 
-Create different sections
+If you would like to divide your documentation into different sections, use `gulpDocs.sections` instead of `gulp.src`.
 
 ```js
 gulp.task('ngdocs', ['server-scripts'], function () {
@@ -56,8 +56,38 @@ gulp.task('ngdocs', ['server-scripts'], function () {
   }).pipe(gulpDocs.process(options)).pipe(gulp.dest('./docs'));
 });
 ```
+###Doc comment example
 
-###Options
+A doc comment looks like this:
+```js
+/**
+ * @ngdoc directive
+ * @name rfx.directive:rAutogrow
+ * @element textarea
+ * @function
+ *
+ * @description
+ * Resize textarea automatically to the size of its text content.
+ *
+ * **Note:** ie<9 needs pollyfill for window.getComputedStyle
+ *
+ * @example
+   <example module="rfx">
+     <file name="index.html">
+         <textarea ng-model="text"rx-autogrow class="input-block-level"></textarea>
+         <pre>{{text}}</pre>
+     </file>
+   </example>
+ */
+angular.module('rfx', []).directive('rAutogrow', function() {
+  //some nice code
+});
+```
+
+Check out the [Writing AngularJS documentation wiki article](https://github.com/angular/angular.js/wiki/Writing-AngularJS-Documentation) to see what's possible,
+or take a look at the [AngularJS source code](https://github.com/angular/angular.js/tree/master/src/ng) for more examples.
+
+##Options
 
 ####scripts
 Set addional custom js files are loaded to the app. This allows the live examples to use custom directives, services, etc. The documentation app works with angular.js 1.2+ and 1.3+. If you include your own angular.js include angular-animate.js too.
@@ -128,33 +158,16 @@ Example: 'templates/my-nav.html'
 
 The template, if specified, is pre-processed using [_.template](http://lodash.com/docs#template).
 
-##Doc comment example
+##Options for Sections
 
-A doc comment looks like this:
-```js
-/**
- * @ngdoc directive
- * @name rfx.directive:rAutogrow
- * @element textarea
- * @function
- *
- * @description
- * Resize textarea automatically to the size of its text content.
- *
- * **Note:** ie<9 needs pollyfill for window.getComputedStyle
- *
- * @example
-   <example module="rfx">
-     <file name="index.html">
-         <textarea ng-model="text"rx-autogrow class="input-block-level"></textarea>
-         <pre>{{text}}</pre>
-     </file>
-   </example>
- */
-angular.module('rfx', []).directive('rAutogrow', function() {
-  //some nice code
-});
-```
+####glob
 
-Check out the [Writing AngularJS documentation wiki article](https://github.com/angular/angular.js/wiki/Writing-AngularJS-Documentation) to see what's possible,
-or take a look at the [AngularJS source code](https://github.com/angular/angular.js/tree/master/src/ng) for more examples.
+[required] glob pattern of files to parse for documentation comments.
+
+###title
+
+[default] name of the section. Set the title for the section in the documentation app.
+
+###api
+
+[default] `true` Set the name for the section in the documentation app.
