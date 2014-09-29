@@ -1,0 +1,21 @@
+{
+  "author": "Nikhil Modak",
+  "name": "gulp-ngdocs",
+  "description": "gulp plugin for angularjs documentation",
+  "version": "0.1.0",
+  "homepage": "https://github.com/nikhilmodak/gulp-ngdocs",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nikhilmodak/gulp-ngdocs.git"
+  },
+  "dependencies": {
+    "angular": "1.2.16",
+    "angular-animate": "1.2.17",
+    "google-code-prettify": "1.0.3",
+    "marked": "0.3.2"
+  },
+  "private": "false",
+  "resolutions": {
+    "angular": "1.2.16"
+  }
+}
