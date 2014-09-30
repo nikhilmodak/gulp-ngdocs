@@ -219,7 +219,7 @@ function process(opts) {
     }
   }
 
-  options.scripts = options.scripts.map(function (script) {
+  options.scripts = _.map(options.scripts, function (script) {
     fstreams.push(streamFile(script, 'js', fakeDest));
     return path.join('js', script.split('/').pop());
   });

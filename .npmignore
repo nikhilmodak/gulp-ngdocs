@@ -1,0 +1,13 @@
+# Directories
+.DS_Store
+.tmp
+node_modules
+bower_components
+dist
+coverage
+test-reports
+build
+spec
+
+# Files
+*.log
