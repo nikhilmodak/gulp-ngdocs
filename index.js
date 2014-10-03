@@ -88,6 +88,9 @@ function process(opts) {
   if (options.scripts && !(options.scripts instanceof Array)) {
     options.scripts = [options.scripts];
   }
+  if (options.styles && !(options.styles instanceof Array)) {
+    options.styles = [options.styles];
+  }
   var defaultSection = 'api';
   var defaultScripts = [
     path.join(bowerComponents, 'angular/angular.min.js'),
