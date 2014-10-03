@@ -35,9 +35,6 @@
          addTag('link', {rel: 'stylesheet', href: '<%= url %>', type: 'text/css'}, sync);
       <% }); %>
 
-      addTag('script', {src: 'js/google-code-prettify.js'}, sync);
-      addTag('script', {src: 'js/marked.js'}, sync);
-
       <% _.forEach(scripts, function(url) { %>
         addTag('script', {src: '<%= url %>'}, sync);
       <% }); %>

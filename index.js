@@ -85,13 +85,19 @@ function process(opts) {
     navContent: '',
     navTemplateData: {}
   }, opts);
+  if (options.scripts && !(options.scripts instanceof Array)) {
+    options.scripts = [options.scripts];
+  }
   var defaultSection = 'api';
   var defaultScripts = [
     path.join(bowerComponents, 'angular/angular.min.js'),
-    path.join(bowerComponents, 'angular/angular.min.js.map'),
     path.join(bowerComponents, 'angular-animate/angular-animate.min.js'),
     path.join(bowerComponents, 'marked/lib/marked.js'),
     path.join(bowerComponents, 'google-code-prettify/src/prettify.js')
+  ];
+  var scriptMaps = [
+    path.join(bowerComponents, 'angular/angular.min.js.map'),
+    path.join(bowerComponents, 'angular-animate/angular-animate.min.js.map')
   ];
 
   function writeSetup() {
@@ -219,9 +225,13 @@ function process(opts) {
     }
   }
 
-  options.scripts = _.map(options.scripts, function (script) {
-    fstreams.push(streamFile(script, 'js', fakeDest));
-    return path.join('js', script.split('/').pop());
+  options.scripts = _.map(options.scripts, function (file) {
+    if (/^((https?:)?\/\/)/.test(file)) {
+      return file;
+    } else {
+      fstreams.push(streamFile(file, 'js', fakeDest));
+      return path.join('js', file.split('/').pop());
+    }
   });
 
   defaultScripts.forEach(function (script, i) {
@@ -229,11 +239,15 @@ function process(opts) {
     options.scripts.splice(i, 0, path.join('js', script.split('/').pop()));
   });
 
+  scriptMaps.forEach(function (script) {
+    fstreams.push(streamFile(script, 'js', fakeDest));
+  });
+
   options.styles = _.map(options.styles, function(file) {
-    if (/^((https?:)?\/\/|\.\.\/)/.test(file)) {
+    if (/^((https?:)?\/\/)/.test(file)) {
       return file;
     } else {
-      fstreams.push(streamFile(file, 'img', fakeDest));
+      fstreams.push(streamFile(file, 'css', fakeDest));
       return 'css/' + file.split('/').pop();
     }
   });
