@@ -21,6 +21,8 @@ var setup = {sections: {}, pages: [], apis: {}};
 var fakeDest = '_FAKE_DEST_';
 var templates = path.resolve(__dirname, 'src/templates');
 var bowerComponents = path.resolve(__dirname, 'bower_components');
+var isWindows = process.platform === 'win32';
+var FILE_DELIMITER = isWindows ? '\\' : '/'; // if windows '\\', if posix '/'
 
 function copyTemplates() {
   return function () {
@@ -31,7 +33,7 @@ function copyTemplates() {
 function streamFile(src, dir, dest, name) {
   return function () {
     return vfs.src(src).pipe(through2.obj(function (file, enc, callback) {
-      name = name === undefined ? file.path.split('/').pop() : name;
+      name = name === undefined ? file.path.split(FILE_DELIMITER).pop() : name;
       this.push(new File({
         base: dest,
         cwd: dest,
@@ -72,7 +74,7 @@ function sections(sects) {
     }));
 }
 
-function process(opts) {
+function processDoc(opts) {
 
   var options = extend({
     startPage: '/api',
@@ -233,13 +235,13 @@ function process(opts) {
       return file;
     } else {
       fstreams.push(streamFile(file, 'js', fakeDest));
-      return path.join('js', file.split('/').pop());
+      return path.join('js', file.split(FILE_DELIMITER).pop());
     }
   });
 
   defaultScripts.forEach(function (script, i) {
     fstreams.push(streamFile(script, 'js', fakeDest));
-    options.scripts.splice(i, 0, path.join('js', script.split('/').pop()));
+    options.scripts.splice(i, 0, path.join('js', script.split(FILE_DELIMITER).pop()).replace('\\', '/'));
   });
 
   scriptMaps.forEach(function (script) {
@@ -251,7 +253,7 @@ function process(opts) {
       return file;
     } else {
       fstreams.push(streamFile(file, 'css', fakeDest));
-      return 'css/' + file.split('/').pop();
+      return 'css/' + file.split(FILE_DELIMITER).pop();
     }
   });
 
@@ -269,6 +271,6 @@ function process(opts) {
 }
 
 module.exports = {
-  process: process,
+  process: processDoc,
   sections: sections
 };
