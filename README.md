@@ -39,6 +39,37 @@ gulp.task('ngdocs', [], function () {
 });
 ```
 
+To use a different angularjs version pass `angular` and `angular-animate` files in scripts.
+
+```js
+gulp.task('ngdocs', [], function () {
+  var gulpDocs = require('gulp-ngdocs');
+  var options = {
+    /* pass both .min.js and .min.js.map files for angular and angular-animate */
+    scripts: [
+      'bower_components/angular/angular.min.js',
+      'bower_components/angular/angular.min.js.map',
+      'bower_components/angular-animate/angular-animate.min.js',
+      'bower_components/angular-animate/angular-animate.min.js.map'
+    ]
+  }
+
+  /*
+  If you choose to use the remote links pass in the .min.js links for angular and angular-animate
+
+  var options = {
+    scripts: [
+      'http://ajax.googleapis.com/ajax/libs/angularjs/<version>/angular.min.js',
+      'http://ajax.googleapis.com/ajax/libs/angularjs/<version>/angular-animate.min.js'
+    ]
+  }
+  */
+  return gulp.src('path/to/src/*.js')
+    .pipe(gulpDocs.process(options))
+    .pipe(gulp.dest('./docs'));
+});
+```
+
 If you would like to divide your documentation into different sections, use `gulpDocs.sections` instead of `gulp.src`.
 
 ```js
