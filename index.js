@@ -12,7 +12,7 @@ var _ = require('lodash');
 var gutil = require('gulp-util');
 var File = gutil.File;
 var PluginError = gutil.PluginError;
-var path = require('path');
+var path = require('canonical-path');
 var StringDecoder = require('string_decoder').StringDecoder;
 var decoder = new StringDecoder('utf8');
 var merge = require('merge-stream');
@@ -31,7 +31,7 @@ function copyTemplates() {
 function streamFile(src, dir, dest, name) {
   return function () {
     return vfs.src(src).pipe(through2.obj(function (file, enc, callback) {
-      name = name === undefined ? file.path.split('/').pop() : name;
+      name = name === undefined ? path.normalize(file.path).split('/').pop() : name;
       this.push(new File({
         base: dest,
         cwd: dest,
@@ -72,7 +72,7 @@ function sections(sects) {
     }));
 }
 
-function process(opts) {
+function processDoc(opts) {
 
   var options = extend({
     startPage: '/api',
@@ -233,13 +233,13 @@ function process(opts) {
       return file;
     } else {
       fstreams.push(streamFile(file, 'js', fakeDest));
-      return path.join('js', file.split('/').pop());
+      return path.join('js', path.normalize(file).split('/').pop());
     }
   });
 
   defaultScripts.forEach(function (script, i) {
     fstreams.push(streamFile(script, 'js', fakeDest));
-    options.scripts.splice(i, 0, path.join('js', script.split('/').pop()));
+    options.scripts.splice(i, 0, path.join('js', path.normalize(script).split('/').pop()));
   });
 
   scriptMaps.forEach(function (script) {
@@ -251,7 +251,7 @@ function process(opts) {
       return file;
     } else {
       fstreams.push(streamFile(file, 'css', fakeDest));
-      return 'css/' + file.split('/').pop();
+      return 'css/' + path.normalize(file).split('/').pop();
     }
   });
 
@@ -269,6 +269,6 @@ function process(opts) {
 }
 
 module.exports = {
-  process: process,
+  process: processDoc,
   sections: sections
 };
