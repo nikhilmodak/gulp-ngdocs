@@ -34,7 +34,7 @@ gulp.task('ngdocs', [], function () {
     titleLink: "/api"
   }
   return gulp.src('path/to/src/*.js')
-    .pipe(gulpDocs.process())
+    .pipe(gulpDocs.process(options))
     .pipe(gulp.dest('./docs'));
 });
 ```
