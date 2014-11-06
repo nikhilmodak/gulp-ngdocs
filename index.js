@@ -17,7 +17,7 @@ var StringDecoder = require('string_decoder').StringDecoder;
 var decoder = new StringDecoder('utf8');
 var merge = require('merge-stream');
 
-var setup = {sections: {}, pages: [], apis: {}};
+var setup;
 var fakeDest = '_FAKE_DEST_';
 var templates = path.resolve(__dirname, 'src/templates');
 var bowerComponents = path.resolve(__dirname, 'bower_components');
@@ -85,6 +85,9 @@ function processDoc(opts) {
     navContent: '',
     navTemplateData: {}
   }, opts);
+
+  setup = {sections: {}, pages: [], apis: {}};
+
   if (options.scripts && !(options.scripts instanceof Array)) {
     options.scripts = [options.scripts];
   }
