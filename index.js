@@ -222,7 +222,7 @@ function processDoc(opts) {
   if (options.image) {
     if (!/^((https?:)?\/\/|\.\.\/)/.test(options.image)) {
       fstreams.push(streamFile(options.image, 'img', fakeDest));
-      options.image = 'img/' + options.image;
+      options.image = 'img/' + path.basename(options.image);
     }
   }
 
