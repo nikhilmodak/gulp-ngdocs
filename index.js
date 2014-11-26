@@ -182,24 +182,28 @@ function processDoc(opts) {
   function flushFunction (cb) {
     if (merged) {
       docsStreamEndCb = cb;
-      ngdoc.merge(reader.docs);
-      reader.docs.forEach(function(doc){
-        // this hack is here because on OSX angular.module and angular.Module map to the same file.
-        var id = doc.id.replace('angular.Module', 'angular.IModule').replace(':', '.'),
-            file = path.join(fakeDest, 'partials', doc.section, id + '.html'),
-            dir = path.join(fakeDest, 'partials', doc.section);
-        docsStream.push(new File({
-          base: fakeDest,
-          cwd: fakeDest,
-          path: file,
-          contents: new Buffer(doc.html(), 'utf8')
-        }));
-      });
+      // IMPORTANT: Allow gulp.watch to continue running.
+      try{
+        ngdoc.merge(reader.docs);
+        reader.docs.forEach(function(doc){
+          // this hack is here because on OSX angular.module and angular.Module map to the same file.
+          var id = doc.id.replace('angular.Module', 'angular.IModule').replace(':', '.'),
+              file = path.join(fakeDest, 'partials', doc.section, id + '.html'),
+              dir = path.join(fakeDest, 'partials', doc.section);
+          docsStream.push(new File({
+            base: fakeDest,
+            cwd: fakeDest,
+            path: file,
+            contents: new Buffer(doc.html(), 'utf8')
+          }));
+        });
 
-      ngdoc.checkBrokenLinks(reader.docs, setup.apis, options);
+        ngdoc.checkBrokenLinks(reader.docs, setup.apis, options);
 
-      setup.pages = _.union(setup.pages, ngdoc.metadata(reader.docs));
-
+        setup.pages = _.union(setup.pages, ngdoc.metadata(reader.docs));
+      } catch (flushError) {
+        console.log(flushError);
+      }
       writeSetup(this);
 
       if (mergedEnded) {
