@@ -85,7 +85,15 @@ function processDoc(opts) {
     navContent: '',
     navTemplateData: {}
   }, opts);
-
+  
+  //Extend loadDefaults
+  options.loadDefaults = extend({
+      angular: true,
+      angularAnimate: true,
+      marked: true,
+      prettify: true
+    }, opts.loadDefaults);
+    
   setup = {sections: {}, pages: [], apis: {}};
 
   if (options.scripts && !(options.scripts instanceof Array)) {
@@ -95,14 +103,37 @@ function processDoc(opts) {
     options.styles = [options.styles];
   }
   var defaultSection = 'api';
-  var defaultScripts = [
-    path.join(bowerComponents, 'angular/angular.min.js'),
-    path.join(bowerComponents, 'angular/angular.min.js.map'),
-    path.join(bowerComponents, 'angular-animate/angular-animate.min.js'),
-    path.join(bowerComponents, 'angular-animate/angular-animate.min.js.map'),
-    path.join(bowerComponents, 'marked/lib/marked.js'),
-    path.join(bowerComponents, 'google-code-prettify/src/prettify.js')
-  ];
+  var defaultScripts = [];
+
+  //Default root paths for scripts
+  var scriptPaths = {
+    angular : [
+      'angular/angular.min.js',
+      'angular/angular.min.js.map'
+    ],
+    angularAnimate: [
+      'angular-animate/angular-animate.min.js',
+      'angular-animate/angular-animate.min.js.map'
+    ],
+    marked: [
+      'marked/lib/marked.js'
+    ],
+    prettify: [
+      'google-code-prettify/src/prettify.js'
+    ]
+  };
+  
+  //Sets default script paths
+  function joinBower(jsPaths){
+    _.each(jsPaths, function(jsPath){
+      defaultScripts.push(path.join(bowerComponents, jsPath));
+    });
+  }
+  //Iterate and checks to join paths
+  _.each(scriptPaths, function(paths, key){
+    if(options.loadDefaults[key])
+      joinBower(paths);
+  });
 
   function writeSetup() {
     var options = setup.__options,
