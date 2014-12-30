@@ -73,7 +73,7 @@ gulp.task('ngdocs', [], function () {
 If you would like to divide your documentation into different sections, use `gulpDocs.sections` instead of `gulp.src`.
 
 ```js
-gulp.task('ngdocs', ['server-scripts'], function () {
+gulp.task('ngdocs', [], function () {
   var gulpDocs = require('gulp-ngdocs');
   var options = { 
     //options
@@ -192,6 +192,18 @@ should be that of listitems inside a bootstrap navbar:
 Example: 'templates/my-nav.html'
 
 The template, if specified, is pre-processed using [_.template](http://lodash.com/docs#template).
+
+####loadDefaults
+Use this option to disable any of the four scripts `angular`, `angularAnimate`, `marked`, and `prettify` (google) which are loaded by default. This would give the user the ability to disable any scripts if they are using methods outside of regular angular/animate loading like browserify.
+
+Example usage:
+```js
+var opts = {
+  loadDefaults: {
+    angularAnimate: false
+  }
+}
+```
 
 ##Options for Sections
 
