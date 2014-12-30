@@ -68,6 +68,7 @@ img.AngularJS-small {
 
 .form-search > ul.nav > li > a {
   margin: 0;
+  overflow: auto;
 }
 
 .form-search > ul.nav > li.module {
