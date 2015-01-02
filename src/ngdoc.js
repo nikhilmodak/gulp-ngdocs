@@ -434,9 +434,8 @@ Doc.prototype = {
           });
           self.properties.push(property);
         } else if(atName == 'eventType') {
-          match = text.match(/^([^\s]*)\s+on\s+([\S\s]*)/);
+          match = text.match(/(broadcast|emit)/);
           self.type = match[1];
-          self.target = match[2];
         } else {
           self[atName] = text;
         }
