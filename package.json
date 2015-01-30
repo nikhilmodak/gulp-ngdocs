@@ -30,8 +30,13 @@
     "bower": "^1.3.11",
     "canonical-path": "0.0.2"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "del": "^1.1.1",
+    "gulp": "^3.8.10",
+    "jasmine-node": "^1.14.5"
+  },
   "scripts": {
-    "install": "bower install"
+    "install": "bower install",
+    "test": "jasmine-node --color spec"
   }
 }
