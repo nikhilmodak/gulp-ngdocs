@@ -1,5 +1,10 @@
 var ngdoc = require('../src/ngdoc.js');
 var DOM = require('../src/dom.js').DOM;
+var index = require('../index');
+var gulp = require('gulp');
+var merge = require('merge-stream');
+var fs = require('fs');
+var del = require('del');
 
 describe('ngdoc', function() {
   var Doc = ngdoc.Doc;
@@ -652,6 +657,45 @@ describe('ngdoc', function() {
         expect(dom).toContain('description');
       });
     });
+  });
+
+  describe('watch', function() {
+
+    beforeEach(function() {
+      try {
+        del.sync(['./tmp-test-files'])
+      } catch(e) {
+
+      }
+    });
+
+    afterEach(function() {
+      del.sync(['./tmp-test-files'])
+    });
+    
+    it('should not duplicate sections if it is run in succession', function(done) {
+      
+      // First go
+      gulp.src(__dirname + '/fixtures/*.js')
+        .pipe(index.process({}))
+        .pipe(gulp.dest('./tmp-test-files'))
+        .on('end', function() {
+          // Second go
+          gulp.src(__dirname + '/fixtures/*.js')
+            .pipe(index.process({}))
+            .pipe(gulp.dest('./tmp-test-files'))
+            .on('end', function() {
+
+              var setupContent = fs.readFileSync('./tmp-test-files/js/docs-setup.js', 'utf-8');
+              var setup = eval(setupContent);
+              expect(setup.pages.length).toEqual(2);
+              done();
+
+            })
+        });
+
+    });
+
   });
 
 });
