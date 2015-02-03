@@ -199,11 +199,13 @@ docsApp.serviceFactory.sections = function serviceFactory() {
     getPage: function(sectionId, partialId) {
       var pages = sections[sectionId];
 
-      partialId = partialId || 'index';
+      if (pages) {
+        partialId = partialId || 'index';
 
-      for (var i = 0, ii = pages.length; i < ii; i++) {
-        if (pages[i].id == partialId) {
-          return pages[i];
+        for (var i = 0, ii = pages.length; i < ii; i++) {
+          if (pages[i].id == partialId) {
+            return pages[i];
+          }
         }
       }
       return null;
