@@ -17,7 +17,7 @@ var StringDecoder = require('string_decoder').StringDecoder;
 var decoder = new StringDecoder('utf8');
 var merge = require('merge-stream');
 
-var setup;
+var setup = {sections: {}, pages: [], apis: {}};
 var fakeDest = '_FAKE_DEST_';
 var templates = path.resolve(__dirname, 'src/templates');
 var bowerComponents = path.resolve(__dirname, 'bower_components');
@@ -87,8 +87,8 @@ function processDoc(opts) {
     navTemplateData: {}
   }, opts);
   
+  setup.pages = [];
   //Extend loadDefaults
-  setup = {sections: {}, pages: [], apis: {}};
   options.loadDefaults = extend({
       angular: true,
       angularAnimate: true,

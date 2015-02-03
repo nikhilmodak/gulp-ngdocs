@@ -673,7 +673,7 @@ describe('ngdoc', function() {
       del.sync(['./tmp-test-files'])
     });
     
-    it('should not duplicate sections if it is run in succession', function(done) {
+    it('should not duplicate pages if it is run in succession', function(done) {
       
       // First go
       gulp.src(__dirname + '/fixtures/*.js')
