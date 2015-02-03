@@ -73,6 +73,7 @@ function sections(sects) {
 }
 
 function processDoc(opts) {
+  opts = opts || {};
 
   var options = extend({
     startPage: '/api',
