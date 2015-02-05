@@ -213,7 +213,8 @@ function processDoc(opts) {
   function flushFunction (cb) {
     if (merged) {
       docsStreamEndCb = cb;
-      // IMPORTANT: Allow gulp.watch to continue running.
+      // IMPORTANT: If you do not want an error here to destroy a gulp watch,
+      // see: http://stackoverflow.com/questions/23971388/prevent-errors-from-breaking-crashing-gulp-watch
       try{
         ngdoc.merge(reader.docs);
         reader.docs.forEach(function(doc){
@@ -234,6 +235,7 @@ function processDoc(opts) {
         setup.pages = _.union(setup.pages, ngdoc.metadata(reader.docs));
       } catch (flushError) {
         console.log(flushError);
+        cb(flushError);
       }
       writeSetup(this);
 

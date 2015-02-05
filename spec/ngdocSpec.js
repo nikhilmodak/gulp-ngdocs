@@ -6,6 +6,9 @@ var merge = require('merge-stream');
 var fs = require('fs');
 var del = require('del');
 
+// Location for temporary test files
+var tmpTestFiles = './tmp-test-files';
+
 describe('ngdoc', function() {
   var Doc = ngdoc.Doc;
   var dom;
@@ -18,6 +21,16 @@ describe('ngdoc', function() {
         return this.actual.indexOf(text) > -1;
       }
     });
+
+    try {
+      del.sync([tmpTestFiles])
+    } catch(e) {
+
+    }
+  });
+
+  afterEach(function() {
+    del.sync([tmpTestFiles])
   });
 
   describe('Doc', function() {
@@ -660,33 +673,24 @@ describe('ngdoc', function() {
   });
 
   describe('watch', function() {
-
-    beforeEach(function() {
-      try {
-        del.sync(['./tmp-test-files'])
-      } catch(e) {
-
-      }
-    });
-
-    afterEach(function() {
-      del.sync(['./tmp-test-files'])
-    });
     
     it('should not duplicate pages if it is run in succession', function(done) {
       
+      var targetFiles = __dirname + '/fixtures/watch/*.js';
+      var destFiles = tmpTestFiles;
+
       // First go
-      gulp.src(__dirname + '/fixtures/*.js')
+      gulp.src(targetFiles)
         .pipe(index.process({}))
-        .pipe(gulp.dest('./tmp-test-files'))
+        .pipe(gulp.dest(destFiles))
         .on('end', function() {
           // Second go
-          gulp.src(__dirname + '/fixtures/*.js')
+          gulp.src(targetFiles)
             .pipe(index.process({}))
-            .pipe(gulp.dest('./tmp-test-files'))
+            .pipe(gulp.dest(destFiles))
             .on('end', function() {
 
-              var setupContent = fs.readFileSync('./tmp-test-files/js/docs-setup.js', 'utf-8');
+              var setupContent = fs.readFileSync(destFiles + '/js/docs-setup.js', 'utf-8');
               var setup = eval(setupContent);
               expect(setup.pages.length).toEqual(2);
               done();
@@ -694,6 +698,18 @@ describe('ngdoc', function() {
             })
         });
 
+    });
+
+  });
+
+  describe('error handling', function() {
+
+    
+    it('should trigger an error event on the stream', function(done) {
+      return gulp.src( __dirname + '/fixtures/error/*.js' )
+        .pipe( index.process({}) )
+        .pipe( gulp.dest( tmpTestFiles ) )
+        .on('error', done);
     });
 
   });
