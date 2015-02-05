@@ -97,6 +97,14 @@ describe('ngdoc', function() {
         });
       });
 
+      it('should parse eventType', function() {
+        var doc = new Doc('@name a\n@eventType broadcast');
+        doc.parse();
+        expect(doc.returns).toEqual({
+          type: 'broadcast'
+        });
+      });
+
       it('should parse filename', function() {
         var doc = new Doc('@name friendly name', 'docs/a.b.ngdoc', 1);
         doc.parse(0);
