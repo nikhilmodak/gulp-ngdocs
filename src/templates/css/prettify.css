@@ -39,7 +39,7 @@ pre.prettyprint.linenums {
           box-shadow: inset 40px 0 0 #fbfbfc, inset 41px 0 0 #ececf0;
 }
 ol.linenums {
-  margin: 0 0 0 33px; /* IE indents via margin-left */
+  margin: 0 0 0 0px; /* IE indents via margin-left */
 } 
 ol.linenums li {
   padding-left: 12px;

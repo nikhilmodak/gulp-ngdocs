@@ -19,7 +19,7 @@ var merge = require('merge-stream');
 
 var setup = {sections: {}, pages: [], apis: {}};
 var fakeDest = '_FAKE_DEST_';
-var templates = path.resolve(__dirname, 'src/templates');
+var templates = path.resolve(__dirname, 'dist/templates');
 var bowerComponents = path.resolve(__dirname, 'bower_components');
 
 function copyTemplates() {

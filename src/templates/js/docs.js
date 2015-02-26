@@ -5,7 +5,7 @@ var docsApp = {
 };
 
 
-docsApp.directive.ngHtmlWrapLoaded = function(reindentCode, templateMerge, loadedUrls) {
+docsApp.directive.ngHtmlWrapLoaded = ['reindentCode', 'templateMerge', 'loadedUrls', function(reindentCode, templateMerge, loadedUrls) {
   function escape(text) {
     return text.
       replace(/\&/g, '&amp;').
@@ -51,25 +51,32 @@ docsApp.directive.ngHtmlWrapLoaded = function(reindentCode, templateMerge, loade
       setHtmlIe8SafeWay(element, escape(templateMerge(html, properties)));
     }
   };
-};
+}];
 
-
-docsApp.directive.focused = function($timeout) {
-  return function(scope, element, attrs) {
-    element[0].focus();
-    element.on('focus', function() {
-      scope.$apply(attrs.focused + '=true');
-    });
-    element.on('blur', function() {
-      // have to use $timeout, so that we close the drop-down after the user clicks,
-      // otherwise when the user clicks we process the closing before we process the click.
-      $timeout(function() {
-        scope.$eval(attrs.focused + '=false');
+  
+  /*docsApp.directive.focused = ['$timeout', function($timeout) {
+    return function(scope, element, attrs) {
+      element[0].focus();
+      element.on('focus', function() {
+        scope.$apply(attrs.focused + '=true');
       });
-    });
-    scope.$eval(attrs.focused + '=true');
-  };
-};
+      element.on('blur', function() {
+        // have to use $timeout, so that we close the drop-down after the user clicks,
+        // otherwise when the user clicks we process the closing before we process the click.
+        
+      });
+      scope.$eval(attrs.focused + '=true');
+    };
+  }];*/
+ 
+  docsApp.directive.focused = ['$timeout', function($timeout) {
+    return function(scope, element, attrs) {
+        $timeout(function() {
+          element[0].focus();
+        }, 300);
+    };
+  }];
+
 
 
 docsApp.directive.code = function() {
@@ -77,12 +84,12 @@ docsApp.directive.code = function() {
 };
 
 
-docsApp.directive.sourceEdit = function(getEmbeddedTemplate) {
+docsApp.directive.sourceEdit = ['getEmbeddedTemplate', function(getEmbeddedTemplate) {
   return NG_DOCS.editExample ? {
     template: '<a class="btn pull-right" ng-click="plunkr($event)" href>' +
       '<i class="icon-pencil"></i> Edit in Plunkr</a>',
     scope: true,
-    controller: function($scope, $attrs, openPlunkr) {
+    controller: ['$scope', '$attrs', 'openPlunkr', function($scope, $attrs, openPlunkr) {
       var sources = {
         module: $attrs.sourceEdit,
         deps: read($attrs.sourceEditDeps),
@@ -96,7 +103,7 @@ docsApp.directive.sourceEdit = function(getEmbeddedTemplate) {
         e.stopPropagation();
         openPlunkr(sources);
       };
-    }
+    }]
   } : {};
 
   function read(text) {
@@ -107,10 +114,10 @@ docsApp.directive.sourceEdit = function(getEmbeddedTemplate) {
     });
     return files;
   }
-};
+}];
 
 
-docsApp.serviceFactory.loadedUrls = function($document) {
+docsApp.serviceFactory.loadedUrls = ['$document', function($document) {
   var urls = {};
 
   angular.forEach($document.find('script'), function(script) {
@@ -129,10 +136,10 @@ docsApp.serviceFactory.loadedUrls = function($document) {
   });
 
   return urls;
-};
+}];
 
 
-docsApp.serviceFactory.formPostData = function($document) {
+docsApp.serviceFactory.formPostData = ['$document', function($document) {
   return function(url, fields) {
     var form = angular.element('<form style="display: none;" method="post" action="' + url + '" target="_blank"></form>');
     angular.forEach(fields, function(value, name) {
@@ -144,9 +151,9 @@ docsApp.serviceFactory.formPostData = function($document) {
     form[0].submit();
     form.remove();
   };
-};
+}];
 
-docsApp.serviceFactory.openPlunkr = function(templateMerge, formPostData, loadedUrls) {
+docsApp.serviceFactory.openPlunkr = ['templateMerge', 'formPostData', 'loadedUrls', function(templateMerge, formPostData, loadedUrls) {
   return function(content) {
     var allFiles = [].concat(content.js, content.css, content.html);
     var indexHtmlContent = '<!doctype html>\n' +
@@ -191,7 +198,7 @@ docsApp.serviceFactory.openPlunkr = function(templateMerge, formPostData, loaded
 
     formPostData('http://plnkr.co/edit/?p=preview', postData);
   };
-};
+}];
 
 
 docsApp.serviceFactory.sections = function serviceFactory() {
@@ -228,7 +235,7 @@ docsApp.serviceFactory.sections = function serviceFactory() {
 };
 
 
-docsApp.controller.DocsController = function($scope, $location, $window, sections) {
+docsApp.controller.DocsController = ['$scope', '$location', '$window', 'sections', function($scope, $location, $window, sections) {
   var INDEX_PATH = /^(\/|\/index[^\.]*.html)$/,
       GLOBALS = /^angular\.([^\.]+)$/,
       MODULE = /^([^\.]+)$/,
@@ -246,6 +253,11 @@ docsApp.controller.DocsController = function($scope, $location, $window, section
    Publish methods
    ***********************************/
 
+  $scope.nav = {
+      isCollapsed: true,
+      selected: '',
+  };
+
   $scope.navClass = function(page1, page2) {
     return {
       first: this.$first,
@@ -253,8 +265,14 @@ docsApp.controller.DocsController = function($scope, $location, $window, section
       active: page1 && this.currentPage == page1 || page2 && this.currentPage == page2,
       match: this.focused && this.currentPage != page1 &&
              this.bestMatch.rank > 0 && this.bestMatch.page == page1
-
     };
+  };
+
+  $scope.goToSelected = function($item, $model, $label) {
+      var url =  $item.url;
+      $location.path(NG_DOCS.html5Mode ? url : url.substring(1));
+      $scope.nav.isCollapsed = true;
+      $scope.nav.selected = '';
   };
 
   $scope.isActivePath = function(url) {
@@ -365,7 +383,7 @@ docsApp.controller.DocsController = function($scope, $location, $window, section
 
   /**********************************
    Initialize
-   ***********************************/
+   ***********************************/ 
 
   $scope.versionNumber = angular.version.full;
   $scope.version = angular.version.full + "  " + angular.version.codeName;
@@ -518,14 +536,14 @@ docsApp.controller.DocsController = function($scope, $location, $window, section
 
     angular.element(document.getElementById('disqus_thread')).html('');
   }
-};
+}];
 
-angular.module('docsApp', ['ngAnimate', 'bootstrap', 'bootstrapPrettify']).
-  config(function($locationProvider) {
+angular.module('docsApp', ['ngAnimate', 'ui.bootstrap', 'bootstrapPrettify']).
+  config(['$locationProvider', function($locationProvider) {
     if (NG_DOCS.html5Mode) {
       $locationProvider.html5Mode(true).hashPrefix('!');
     }
-  }).
+  }]).
   factory(docsApp.serviceFactory).
   directive(docsApp.directive).
   controller(docsApp.controller);
