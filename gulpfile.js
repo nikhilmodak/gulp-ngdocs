@@ -10,11 +10,6 @@
   var rename      = require('gulp-rename');
   var jshint      = require('gulp-jshint');
 
-  // Handlers
-  var errorHandler = function (who) {
-      if(who.on) who.on('error', function (e){ who.end(); });
-  }
-
   var paths = {
     src: {
       css:    [
@@ -29,14 +24,13 @@
       others: ['./src/*.js', './src/*.words', './src/templates/*.tmpl']
     },
     dest: {
-      dist: './dist',
-      css:  './dist/templates/css',
-      js:   './dist/templates/js',
+      css:  './src/templates/css/min',
+      js:   './src/templates/js/min',
     },
   };
 
   gulp.task('cleanMinStyles', function (){
-    del(paths.dest.css+'/*.min.css');
+    del(paths.dest.css+'/*min.css');
   });
 
   gulp.task('concatStyles', function (){
@@ -61,7 +55,7 @@
   gulp.task('styles', ['cleanMinStyles', 'concatStyles', 'minifyStyles']);
 
   gulp.task('cleanMinScripts', function (){
-    del(paths.dest.js+'/*.min.js');
+    del(paths.dest.js+'/*min.js');
   });
 
   gulp.task('concatScripts', function (){
@@ -79,17 +73,11 @@
 
   gulp.task('scripts', ['lint', 'cleanMinScripts', 'concatScripts', 'minifyScripts']);
 
-  gulp.task('copyFiles', function (){
-    gulp.src(paths.src.others)
-      .pipe(copy(paths.dest.dist, {prefix:1}));
-  });
-
-  gulp.task('build', ['styles', 'scripts', 'copyFiles']);
+  gulp.task('build', ['styles', 'scripts']);
 
   gulp.task('watch', function() {
     gulp.watch(paths.src.css, ['styles']);
     gulp.watch(paths.src.js, ['scripts']);
-    gulp.watch(paths.src.others, ['copyFiles']);
   });
 
   gulp.task('default', ['build', 'watch']);
