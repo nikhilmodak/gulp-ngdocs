@@ -1293,7 +1293,7 @@ function checkBrokenLinks(docs, apis, options) {
 
   docs.forEach(function(doc) {
     doc.links.forEach(function(link) {
-      if (options && !options.html5mode) {
+      if (options && !options.html5Mode) {
         link = link.substring(2);
       }
       // convert #id to path#id
