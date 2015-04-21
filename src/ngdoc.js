@@ -165,7 +165,7 @@ Doc.prototype = {
       IS_URL = /^(https?:\/\/|ftps?:\/\/|mailto:|\.|\/)/,
       IS_ANGULAR = /^(api\/)?(angular|ng|AUTO)\./,
       IS_HASH = /^#/,
-      parts = trim(text).split(/(<pre.*?>[\s\S]*?<\/pre>|<doc:example(\S*).*?>[\s\S]*?<\/doc:example>|<example[^>]*>[\s\S]*?<\/example>)/),
+      parts = trim(text).split(/(```[+-]?[a-z]*[\s\S]*?```|<pre.*?>[\s\S]*?<\/pre>|<doc:example(\S*).*?>[\s\S]*?<\/doc:example>|<example[^>]*>[\s\S]*?<\/example>)/),
       seq = 0,
       placeholderMap = {};
 
@@ -282,6 +282,31 @@ Doc.prototype = {
         replace(/{@installModule\s+(\S+)?}/g, function(_, module) {
           return explainModuleInstallation(module);
         });
+
+      if(self.options.highlightCodeFences) {
+        parts[i] = parts[i].replace(/^```([+-]?)([a-z]*)([\s\S]*?)```/i, function(_, alert, type, content){
+          var tClass = 'prettyprint linenums';
+
+          // check if alert type is set - if true, add the corresponding
+          // bootstrap classes
+          if(alert) {
+            tClass += ' alert alert-' + (alert === '+' ? 'success' : 'danger');
+          }
+
+          // if type is set, add lang-* information for google code
+          // prettify - normally this is not necessary, because the prettifier
+          // tries to guess the language.
+          if(type) {
+            tClass += ' lang-' + type;
+          }
+
+          return placeholder(
+              '<pre class="' + tClass + '">' +
+              content.replace(/</g, '&lt;').replace(/>/g, '&gt;') +
+              '</pre>');
+        });
+
+      }
     });
     text = parts.join('');
 
@@ -1268,7 +1293,7 @@ function checkBrokenLinks(docs, apis, options) {
 
   docs.forEach(function(doc) {
     doc.links.forEach(function(link) {
-      if (options && !options.html5mode) {
+      if (options && !options.html5Mode) {
         link = link.substring(2);
       }
       // convert #id to path#id

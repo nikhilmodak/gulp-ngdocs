@@ -269,6 +269,141 @@ describe('ngdoc', function() {
                 '<p>fifth line</p>\n</div>');
     });
 
+    describe('highlight code fences', function() {
+      var tInputCode;
+
+      beforeEach(function() {
+        tInputCode = 'function myFunction() {\n' +
+            'var tSolution;\n' +
+            '// tSolution = complexMethod();\n' +
+            'tSolution = 42; // expect 42 as correct solution\n' +
+            'return tSolution;' +
+            '}';
+
+      });
+
+      it('should replace the ``` fence with a code block', function() {
+        var tInput,
+            tOutput;
+
+        tInput = '```\n' +
+            tInputCode +
+            '```';
+
+        tOutput = new Doc(null, null, null, {highlightCodeFences: true}).markdown(tInput);
+
+        expect(tOutput)
+            .toEqual('<div class="docs-page">' +
+            '<pre class="prettyprint linenums">\n' +
+            tInputCode +
+            '</pre>\n' +
+            '</div>');
+      });
+
+      it('should replace the ``` fence with a code block containing the type information', function() {
+        var tInput,
+            tOutput;
+
+        tInput = '```js\n' +
+            tInputCode +
+            '```';
+
+        tOutput = new Doc(null, null, null, {highlightCodeFences: true}).markdown(tInput);
+
+        expect(tOutput)
+            .toEqual('<div class="docs-page">' +
+            '<pre class="prettyprint linenums lang-js">\n' +
+            tInputCode +
+            '</pre>\n' +
+            '</div>');
+      });
+
+      it('should replace the ``` fence with a code block and success alert class', function() {
+        var tInput,
+            tOutput;
+
+        tInput = '```+\n' +
+            tInputCode +
+            '```';
+
+        tOutput = new Doc(null, null, null, {highlightCodeFences: true}).markdown(tInput);
+
+        expect(tOutput)
+            .toEqual('<div class="docs-page">' +
+            '<pre class="prettyprint linenums alert alert-success">\n' +
+            tInputCode +
+            '</pre>\n' +
+            '</div>');
+      });
+
+      it('should replace the ``` fence with a code block and danger alert class', function() {
+        var tInput,
+            tOutput;
+
+        tInput = '```-\n' +
+            tInputCode +
+            '```';
+
+        tOutput = new Doc(null, null, null, {highlightCodeFences: true}).markdown(tInput);
+
+        expect(tOutput)
+            .toEqual('<div class="docs-page">' +
+            '<pre class="prettyprint linenums alert alert-danger">\n' +
+            tInputCode +
+            '</pre>\n' +
+            '</div>');
+      });
+
+      it('should replace the ``` fence with a code block containing the type information and the success alert class', function() {
+        var tInput,
+            tOutput;
+
+        tInput = '```+js\n' +
+            tInputCode +
+            '```';
+
+        tOutput = new Doc(null, null, null, {highlightCodeFences: true}).markdown(tInput);
+
+        expect(tOutput)
+            .toEqual('<div class="docs-page">' +
+            '<pre class="prettyprint linenums alert alert-success lang-js">\n' +
+            tInputCode +
+            '</pre>\n' +
+            '</div>');
+      });
+
+      it('should replace the ``` fence with a code block containing the type information and the danger alert class', function() {
+        var tInput,
+            tOutput;
+
+        tInput = '```-js\n' +
+            tInputCode +
+            '```';
+
+        tOutput = new Doc(null, null, null, {highlightCodeFences: true}).markdown(tInput);
+
+        expect(tOutput)
+            .toEqual('<div class="docs-page">' +
+            '<pre class="prettyprint linenums alert alert-danger lang-js">\n' +
+            tInputCode +
+            '</pre>\n' +
+            '</div>');
+      });
+
+      it('should not replace the ``` fence', function() {
+        var tInput,
+            tOutput;
+
+        tInput = '```\n' +
+            tInputCode +
+            '```';
+
+        tOutput = new Doc(null, null, null, {highlightCodeFences: false}).markdown(tInput);
+
+        expect(tOutput).toEqual('<div class="docs-page"><pre><code>' + tInputCode + '</code></pre>\n</div>');
+      });
+    });
+
 
     describe('inline annotations', function() {
       it('should convert inline docs annotations into proper HTML', function() {
@@ -681,9 +816,9 @@ describe('ngdoc', function() {
   });
 
   describe('watch', function() {
-    
+
     it('should not duplicate pages if it is run in succession', function(done) {
-      
+
       var targetFiles = __dirname + '/fixtures/watch/*.js';
       var destFiles = tmpTestFiles;
 
@@ -712,7 +847,7 @@ describe('ngdoc', function() {
 
   describe('error handling', function() {
 
-    
+
     it('should trigger an error event on the stream', function(done) {
       return gulp.src( __dirname + '/fixtures/error/*.js' )
         .pipe( index.process({}) )
