@@ -268,12 +268,12 @@ function processDoc(opts) {
 
   var scriptNames = [];
   options.scripts = _.map(options.scripts, function (file) {
-    var fileName = path.normalize(file).split('/').pop();
+    var fileName = path.normalize(file);
     scriptNames.push(fileName);
     if (/^((https?:)?\/\/)/.test(file)) {
       return file;
     } else {
-      fstreams.push(streamFile(file, 'js', fakeDest));
+      fstreams.push(streamFile(file, path.join('js', path.dirname(fileName)), fakeDest));
       return path.join('js', fileName);
     }
   });
@@ -292,11 +292,12 @@ function processDoc(opts) {
   });
 
   options.styles = _.map(options.styles, function(file) {
+      var fileName = path.normalize(file);
     if (/^((https?:)?\/\/)/.test(file)) {
       return file;
     } else {
-      fstreams.push(streamFile(file, 'css', fakeDest));
-      return 'css/' + path.normalize(file).split('/').pop();
+      fstreams.push(streamFile(file, path.join('css', path.dirname(fileName)), fakeDest));
+      return path.join('css', fileName);
     }
   });
 
