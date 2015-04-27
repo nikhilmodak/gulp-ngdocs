@@ -166,7 +166,7 @@ function processDoc(opts) {
     setup.editExample = options.editExample;
     setup.startPage = options.startPage;
     setup.discussions = options.discussions;
-    setup.scripts = _.map(options.scripts, function(url) { return path.basename(url); });
+    setup.scripts = options.scripts;
     docsStream.push(new File({
       base: fakeDest,
       cwd: fakeDest,
