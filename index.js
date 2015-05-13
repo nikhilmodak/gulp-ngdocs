@@ -166,7 +166,7 @@ function processDoc(opts) {
     setup.editExample = options.editExample;
     setup.startPage = options.startPage;
     setup.discussions = options.discussions;
-    setup.scripts = _.map(options.scripts, function(url) { return path.basename(url); });
+    setup.scripts = options.scripts;
     docsStream.push(new File({
       base: fakeDest,
       cwd: fakeDest,
@@ -268,12 +268,12 @@ function processDoc(opts) {
 
   var scriptNames = [];
   options.scripts = _.map(options.scripts, function (file) {
-    var fileName = path.normalize(file).split('/').pop();
+    var fileName = path.normalize(file);
     scriptNames.push(fileName);
     if (/^((https?:)?\/\/)/.test(file)) {
       return file;
     } else {
-      fstreams.push(streamFile(file, 'js', fakeDest));
+      fstreams.push(streamFile(file, path.join('js', path.dirname(fileName)), fakeDest));
       return path.join('js', fileName);
     }
   });
@@ -292,11 +292,12 @@ function processDoc(opts) {
   });
 
   options.styles = _.map(options.styles, function(file) {
+      var fileName = path.normalize(file);
     if (/^((https?:)?\/\/)/.test(file)) {
       return file;
     } else {
-      fstreams.push(streamFile(file, 'css', fakeDest));
-      return 'css/' + path.normalize(file).split('/').pop();
+      fstreams.push(streamFile(file, path.join('css', path.dirname(fileName)), fakeDest));
+      return path.join('css', fileName);
     }
   });
 
