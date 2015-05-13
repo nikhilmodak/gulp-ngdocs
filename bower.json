@@ -2,7 +2,7 @@
   "author": "Nikhil Modak",
   "name": "gulp-ngdocs",
   "description": "gulp plugin for angularjs documentation",
-  "version": "0.2.11",
+  "version": "0.2.12",
   "homepage": "https://github.com/nikhilmodak/gulp-ngdocs",
   "repository": {
     "type": "git",
