@@ -14,6 +14,7 @@ var DEPENDENCIES = {
 
 
 function escape(text) {
+  if(!text) text = '';
   return text.
     replace(/\&/g, '&amp;').
     replace(/\</g, '&lt;').
@@ -113,7 +114,7 @@ directive.prettyprint = ['reindentCode', function(reindentCode) {
 }];
 
 
-directive.ngSetText = ['getEmbeddedTemplate', function(getEmbeddedTemplate) {
+directive.ngSetText = ['getEmbeddedTemplate', '$compile', function(getEmbeddedTemplate, $compile) {
   return {
     restrict: 'CA',
     priority: 10,
@@ -309,7 +310,6 @@ service.templateMerge = ['reindentCode', function(indentCode) {
 service.getEmbeddedTemplate = ['reindentCode', function(reindentCode) {
   return function (id) {
     var element = document.getElementById(id);
-
     if (!element) {
       return null;
     }

@@ -170,11 +170,6 @@ Wraps the title text in an anchor tag with the provided URL.
 [default] no anchor tag is used
 Wraps the navbar image in an anchor tag with the provided URL.
 
-####bestMatch
-[default] `false`
-The best matching page for a search query is highlighted and get selected on return.
-If this option is set to true the best match is shown below the search field in an dropdown menu. Use this for long lists where the highlight is often not visible.
-
 ####navTemplate
 [default] `null`
 Path to a template of a nav HTML template to include.  The css for it
