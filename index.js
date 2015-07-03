@@ -20,7 +20,7 @@ var merge = require('merge-stream');
 var setup = {sections: {}, pages: [], apis: {}};
 var fakeDest = '_FAKE_DEST_';
 var templates = path.resolve(__dirname, 'src/templates');
-var bowerComponents = path.resolve(__dirname, 'bower_components');
+var nodeModules = path.resolve(__dirname, 'node_modules');
 
 function copyTemplates() {
   return function () {
@@ -92,8 +92,7 @@ function processDoc(opts) {
   options.loadDefaults = extend({
       angular: true,
       angularAnimate: true,
-      marked: true,
-      prettify: true
+      marked: true
     }, opts.loadDefaults);
     
   if (options.scripts && !(options.scripts instanceof Array)) {
@@ -117,22 +116,19 @@ function processDoc(opts) {
     ],
     marked: [
       'marked/lib/marked.js'
-    ],
-    prettify: [
-      'google-code-prettify/src/prettify.js'
     ]
   };
   
   //Sets default script paths
-  function joinBower(jsPaths){
+  function joinNodeModules(jsPaths){
     _.each(jsPaths, function(jsPath){
-      defaultScripts.push(path.join(bowerComponents, jsPath));
+      defaultScripts.push(path.join(nodeModules, jsPath));
     });
   }
   //Iterate and checks to join paths
   _.each(scriptPaths, function(paths, key){
     if(options.loadDefaults[key])
-      joinBower(paths);
+      joinNodeModules(paths);
   });
 
   function writeSetup() {
