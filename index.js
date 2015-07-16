@@ -214,16 +214,23 @@ function processDoc(opts) {
       try{
         ngdoc.merge(reader.docs);
         reader.docs.forEach(function(doc){
-          // this hack is here because on OSX angular.module and angular.Module map to the same file.
-          var id = doc.id.replace('angular.Module', 'angular.IModule').replace(':', '.'),
-              file = path.join(fakeDest, 'partials', doc.section, id + '.html'),
-              dir = path.join(fakeDest, 'partials', doc.section);
-          docsStream.push(new File({
-            base: fakeDest,
-            cwd: fakeDest,
-            path: file,
-            contents: new Buffer(doc.html(), 'utf8')
-          }));
+          try {
+            // this hack is here because on OSX angular.module and angular.Module map to the same file.
+            var id = doc.id.replace('angular.Module', 'angular.IModule').replace(':', '.'),
+                file = path.join(fakeDest, 'partials', doc.section, id + '.html'),
+                dir = path.join(fakeDest, 'partials', doc.section);
+            docsStream.push(new File({
+              base: fakeDest,
+              cwd: fakeDest,
+              path: file,
+              contents: new Buffer(doc.html(), 'utf8')
+            }));
+          } catch (docError) {
+            var cause = docError.name + ': ' + docError.message,
+                placement = doc.file + ':' + doc.line,
+                message = cause + ' at ' + placement;
+            throw new Error(message);
+          }
         });
 
         ngdoc.checkBrokenLinks(reader.docs, setup.apis, options);
