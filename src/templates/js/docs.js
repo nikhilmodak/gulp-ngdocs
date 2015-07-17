@@ -1,8 +1,7 @@
 var docsApp = {
   controller: {},
   directive: {},
-  serviceFactory: {},
-  filter: {},
+  serviceFactory: {}
 };
 
 
@@ -258,8 +257,6 @@ docsApp.controller.DocsController = ['$scope', '$location', '$window', 'sections
       isCollapsed: true,
       selected: '',
   };
-
-  $scope.isArray = angular.isArray;
 
   $scope.navClass = function(page1, page2) {
     return {
@@ -541,30 +538,12 @@ docsApp.controller.DocsController = ['$scope', '$location', '$window', 'sections
   }
 }];
 
-
-/**
- * Filters
- */
-docsApp.filter.capitalize = function (){
-  return function (input){
-    return (!!input) 
-      ? input.replace(/([^\W_]+[^\s-]*) */g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();}) 
-      : '';
-  }
-};
-
-
-/**
- * Module
- */
-angular
-  .module('docsApp', ['ngAnimate', 'ui.bootstrap', 'bootstrapPrettify'])
-    .config(['$locationProvider', function($locationProvider) {
-      if (NG_DOCS.html5Mode) {
-        $locationProvider.html5Mode(true).hashPrefix('!');
-      };
-    }])
-    .factory(docsApp.serviceFactory)
-    .directive(docsApp.directive)
-    .controller(docsApp.controller)
-    .filter(docsApp.filter);
+angular.module('docsApp', ['ngAnimate', 'ui.bootstrap', 'bootstrapPrettify']).
+  config(['$locationProvider', function($locationProvider) {
+    if (NG_DOCS.html5Mode) {
+      $locationProvider.html5Mode(true).hashPrefix('!');
+    }
+  }]).
+  factory(docsApp.serviceFactory).
+  directive(docsApp.directive).
+  controller(docsApp.controller);
