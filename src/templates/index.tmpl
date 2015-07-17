@@ -6,6 +6,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0" />
   <meta name="Description"
   content="AngularJS is what HTML would have been, had it been designed for building web-apps.
   Declarative templates with data-binding, MVC, dependency injection and great
@@ -37,6 +38,7 @@
       <% if(!deferLoad) { %>
         addTag('script', {src: 'js/min/scripts.min.js'}, sync);
         addTag('script', {src: 'js/docs-setup.js'}, sync);
+        addTag('script', {src: 'js/docs.js'}, sync);
       <% } %>
       function addTag(name, attributes, sync) {
         var el = document.createElement(name),
@@ -162,92 +164,31 @@
                 type="text" ng-model="nav.selected" placeholder="search the docs" tabindex="1" accesskey="s" focused="focused">
         </div>
    
-        <ul class="minimal list-group hidden-xs hidden-sm" ng-repeat="module in modules track by $index">
+        <ul class="minimal list-group hidden-xs hidden-sm" ng-repeat="module in modules track by module.name">
             <a href="{{module.url}}"> {{module.name}} </a>
             
             <!-- Opening accordion -->
             <li accordion class="list-group-item" close-others="true">
 
-                <!-- Directives -->
-                    <accordion-group ng-if="module.directives.length" is-open="status.isFirstOpen" is-disabled="status.isFirstDisabled">
-                        <accordion-heading>
+                <accordion-group 
+                  ng-repeat="(key, value) in module" 
+                  ng-if="isArray(value) && value.length" 
+                  is-open="status.isFirstOpen" 
+                  is-disabled="status.isFirstDisabled">
+                    
+                    <accordion-heading>
+                        <span class="caret caret-west" ng-class="$parent.isOpen ? 'caret-south' : 'caret-west'"></span> <span class="small">{{key | capitalize:key}}</span>
+                    </accordion-heading>
 
-                            <span class="caret caret-west" ng-class="$parent.isOpen ? 'caret-south' : 'caret-west'"></span> <span class="small">Directives </span>
-                        </accordion-heading>
-                        <dl class="small" ng-repeat="page in module.directives track by page.url" ng-class="navClass(page)">
-                            <dt> <mark class="pull-right">{{page.type}}</mark>  </dt>
-                            <dd> <a href="{{page.url}}">{{page.shortName}}</a> </dd>
-                        </dl>
-                    </accordion-group>
+                    <dl class="small" ng-repeat="item in value track by $index" ng-class="navClass(item)">
+                        <dt> <mark class="pull-right">{{item.type || item.instance.type}}</mark>  </dt>
+                        <dd> <a href="{{item.url || item.instance.url}}">{{item.shortName || item.name}}</a> </dd>
+                    </dl>
 
-                <!-- Controllers -->
-                    <accordion-group ng-if="module.controllers.length" is-open="status.isFirstOpen" is-disabled="status.isFirstDisabled">
-                        <accordion-heading>
-                            <span class="caret caret-west" ng-class="$parent.isOpen ? 'caret-south' : 'caret-west'"></span> <span class="small">Controllers</span>
-                        </accordion-heading>
-                        <dl class="small" ng-repeat="page in module.controllers track by page.url" ng-class="navClass(page)"> 
-                            <dt> <mark class="pull-right">{{page.type}}</mark>  </dt>
-                            <dd> <a href="{{page.url}}">{{page.shortName}}</a> </dd>
-                        </dl>
-                    </accordion-group>
-
-                <!-- Filters -->
-                    <accordion-group ng-if="module.filters.length" is-open="status.isFirstOpen" is-disabled="status.isFirstDisabled">
-                        <accordion-heading>
-                            <span class="caret caret-west" ng-class="$parent.isOpen ? 'caret-south' : 'caret-west'"></span> <span class="small">Filters</span>
-                        </accordion-heading>
-                        <dl class="small" ng-repeat="page in module.filters track by page.url" ng-class="navClass(page)"> 
-                            <dt> <mark class="pull-right">{{page.type}}</mark>  </dt>
-                            <dd> <a href="{{page.url}}">{{page.shortName}}</a> </dd>
-                        </dl>
-                    </accordion-group>
-
-                <!-- Services -->
-                    <accordion-group ng-if="module.services.length" is-open="status.isFirstOpen" is-disabled="status.isFirstDisabled">
-                        <accordion-heading>
-                            <span class="caret caret-west" ng-class="$parent.isOpen ? 'caret-south' : 'caret-west'"></span> <span class="small">Services</span>
-                        </accordion-heading>
-                        <dl class="small" ng-repeat="page in module.services track by page.url" ng-class="navClass(page)"> 
-                            <dt> <mark class="pull-right">{{page.instance.type}}</mark>  </dt>
-                            <dd> <a href="{{page.instance.url}}">{{page.name}}</a> </dd>
-                        </dl>
-                    </accordion-group>
-
-                <!-- Types -->
-                    <accordion-group ng-if="module.types.length" is-open="status.isFirstOpen" is-disabled="status.isFirstDisabled">
-                        <accordion-heading>
-                            <span class="caret caret-west" ng-class="$parent.isOpen ? 'caret-south' : 'caret-west'"></span> <span class="small">Types</span>
-                        </accordion-heading>
-                        <dl class="small" ng-repeat="page in module.types track by page.url" ng-class="navClass(page)"> 
-                            <dt> <mark class="pull-right">{{page.type}}</mark>  </dt>
-                            <dd> <a href="{{page.url}}">{{page.name}}</a> </dd>
-                        </dl>
-                    </accordion-group>
-
-                <!-- Globals -->
-                    <accordion-group ng-if="module.globals.length" is-open="status.isFirstOpen" is-disabled="status.isFirstDisabled">
-                        <accordion-heading>
-                            <span class="caret caret-west" ng-class="$parent.isOpen ? 'caret-south' : 'caret-west'"></span> <span class="small">Globals</span>
-                        </accordion-heading>
-                        <dl class="small" ng-repeat="page in module.globals track by page.url" ng-class="navClass(page)"> 
-                            <dt> <mark class="pull-right">{{page.type}}</mark>  </dt>
-                            <dd> <a href="{{page.url}}">{{page.shortName}}</a> </dd>
-                        </dl>
-                    </accordion-group>
-
-                <!-- Others -->
-                    <accordion-group ng-if="module.others.length" is-open="status.isFirstOpen" is-disabled="status.isFirstDisabled">
-                        <accordion-heading>
-                            <span class="caret caret-west" ng-class="$parent.isOpen ? 'caret-south' : 'caret-west'"></span> <span class="small">Others</span>
-                        </accordion-heading>
-                        <dl class="small" ng-repeat="page in module.others track by page.url" ng-class="navClass(page)"> 
-                            <dt> <mark class="pull-right">{{page.type}}</mark>  </dt>
-                            <dd> <a href="{{page.url}}">{{page.shortName}}</a> </dd>
-                        </dl>
-                    </accordion-group>
+                </accordion-group>
 
             </li>
-            <!-- Closing accordion -->
+            <!-- Closing accordion --> 
 
         </ul>
 
