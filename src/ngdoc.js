@@ -434,7 +434,11 @@ Doc.prototype = {
         } else if (atName == 'returns' || atName == 'return') {
           match = text.match(/^\{([^}]+)\}\s+(.*)/);
           if (!match) {
-            throw new Error("Not a valid 'returns' format: " + text + ' (found in: ' + self.file + ':' + self.line + ')');
+            match = text.match(/^\{([^}]+)\}$/);
+            if (!match) {
+              throw new Error("Not a valid 'returns' format: " + text + ' (found in: ' + self.file + ':' + self.line + ')');
+            }
+            match[2] = '';
           }
           self.returns = {
             type: match[1],
