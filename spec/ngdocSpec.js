@@ -847,12 +847,19 @@ describe('ngdoc', function() {
 
   describe('error handling', function() {
 
-
     it('should trigger an error event on the stream', function(done) {
+      spyOn(console, 'log');
       return gulp.src( __dirname + '/fixtures/error/*.js' )
         .pipe( index.process({}) )
         .pipe( gulp.dest( tmpTestFiles ) )
-        .on('error', done);
+        .on('error', function () {
+            expect(console.log).toHaveBeenCalled();
+            var warningMsg = console.log.argsForCall[0][0]
+            expect(warningMsg).toContain('Error:');
+            expect(warningMsg).toContain('Don\'t know how to format @ngdoc:');
+            expect(warningMsg).toContain('servicesdfasdf');
+            done();
+        });
     });
 
   });
