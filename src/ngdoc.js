@@ -76,9 +76,9 @@ Doc.prototype = {
     Doc.METADATA_IGNORE.forEach(function(ignore){ keywords[ignore] = true; });
 
     function extractWords(text) {
-      var tokens = text.toLowerCase().split(/[\.\s,`'"#]+/mg);
+      var tokens = text.toLowerCase().split(/[\.\s:,`'"#]+/mg);
       tokens.forEach(function(key){
-        var match = key.match(/^((ng:|[\$_a-z])[\w\-_]+)/);
+        var match = key.match(/^((ng:|[\$_\w])[\w\-_]+)/);
         if (match){
           key = match[1];
           if (!keywords[key]) {
