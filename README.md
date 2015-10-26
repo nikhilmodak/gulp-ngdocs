@@ -39,7 +39,7 @@ gulp.task('ngdocs', [], function () {
 });
 ```
 
-To use a different angularjs version pass `angular` and `angular-animate` files in scripts.
+To use a different AngularJS version pass `angular` and `angular-animate` files in scripts.
 
 ```js
 gulp.task('ngdocs', [], function () {
@@ -75,7 +75,7 @@ If you would like to divide your documentation into different sections, use `gul
 ```js
 gulp.task('ngdocs', [], function () {
   var gulpDocs = require('gulp-ngdocs');
-  var options = { 
+  var options = {
     //options
   }
   return gulpDocs.sections({
@@ -104,7 +104,7 @@ A doc comment looks like this:
  * @description
  * Resize textarea automatically to the size of its text content.
  *
- * **Note:** ie<9 needs pollyfill for window.getComputedStyle
+ * **Note:** ie<9 needs polyfill for window.getComputedStyle
  *
  * @example
    <example module="rfx">
@@ -125,13 +125,13 @@ or take a look at the [AngularJS source code](https://github.com/angular/angular
 ##Options
 
 ####scripts
-Set addional custom js files are loaded to the app. This allows the live examples to use custom directives, services, etc. The documentation app works with angular.js 1.2+ and 1.3+. If you include your own angular.js include angular-animate.js too.
+Set additional custom JS files are loaded to the app. This allows the live examples to use custom directives, services, etc. The documentation app works with AngularJS 1.2+ and 1.3+. If you include a different version of AngularJS, make sure to include angular-animate.js as well.
 
 Possible values:
 
-  - ['path/to/file.js'] file will be copied into the docs, into a `js` folder
-  - ['http://example.com/file.js', 'https://example.com/file.js', '//example.com/file.js'] reference remote files (eg from a CDN)
-  - ['../app.js'] reference file relative to the dest folder
+  - `['path/to/file.js']` file will be copied into the docs, into a `js` folder
+  - `['http://example.com/file.js', 'https://example.com/file.js', '//example.com/file.js']` reference remote files (eg from a CDN)
+  - `['../app.js']` reference file relative to the dest folder
 
 ####styles
 [default] `[]`
