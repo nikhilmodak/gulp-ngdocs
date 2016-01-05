@@ -1,6 +1,7 @@
 # Directories
 .DS_Store
 .tmp
+.idea
 node_modules
 bower_components
 dist
