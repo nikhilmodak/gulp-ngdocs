@@ -21,6 +21,7 @@ var setup = {sections: {}, pages: [], apis: {}};
 var fakeDest = '_FAKE_DEST_';
 var templates = path.resolve(__dirname, 'src/templates');
 var nodeModules = path.resolve(__dirname, 'node_modules');
+var flattenedNodeModules = path.resolve(__dirname, '../');
 
 function copyTemplates() {
   return function () {
@@ -122,7 +123,16 @@ function processDoc(opts) {
   //Sets default script paths
   function joinNodeModules(jsPaths){
     _.each(jsPaths, function(jsPath){
-      defaultScripts.push(path.join(nodeModules, jsPath));
+      var libPath = path.join(nodeModules, jsPath),
+          flattenedLibPath = path.join(flattenedNodeModules, jsPath);
+
+      if (fs.existsSync(libPath)) {
+        defaultScripts.push(libPath);
+      } else if (fs.existsSync(flattenedLibPath)) {
+        defaultScripts.push(flattenedLibPath);
+      } else {
+        console.error('Could not find ' + jsPath);
+      }
     });
   }
   //Iterate and checks to join paths
