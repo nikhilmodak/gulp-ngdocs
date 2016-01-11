@@ -1,17 +1,11 @@
-img.AngularJS-small {
+
+.AngularJS-small {
   width: 95px;
   height: 25px;
 }
 
-/* this is here to avoid the display=block shuffling of ngShow */
-.breadcrumb li > * {
-  float:left;
-  margin:0 2px 0 0;
-}
-
 .breadcrumb {
   padding-top: 6px;
-  padding-bottom: 0;
   line-height: 18px
 }
 
@@ -20,7 +14,7 @@ img.AngularJS-small {
   padding-right: 20px;
 }
 
-.navbar img+.brand {
+.navbar img+.brand {``
   padding: 10px 20px 10px 10px;
 }
 
@@ -50,13 +44,8 @@ img.AngularJS-small {
   margin-right: 10px;
 }
 
-.form-search .search-query {
-  width: 180px;
-  width: 200px \9;
-}
-
 .form-search .dropdown-menu {
-  margin-left: 10px;
+  width: 100%;
 }
 
 .form-search .code {
@@ -68,7 +57,6 @@ img.AngularJS-small {
 
 .form-search > ul.nav > li > a {
   margin: 0;
-  overflow: auto;
 }
 
 .form-search > ul.nav > li.module {
@@ -149,20 +137,24 @@ img.AngularJS-small {
   display: block;
 }
 
-.content code {
+/*.content code {
   background-color: inherit;
   color: inherit;
   border: none;
   padding: 0;
   font-size: inherit;
   font-family: monospace;
-}
+}*/
 
 .content h2,
 .content h3,
 .content h4,
 .content h5 {
   margin: 1em 0 5px;
+}
+
+.type-hint-function {
+  background: #d9534f;
 }
 
 .content h1 {
