@@ -86,7 +86,7 @@ function processDoc(opts) {
     navContent: '',
     navTemplateData: {}
   }, opts);
-  
+
   setup.pages = [];
   //Extend loadDefaults
   options.loadDefaults = extend({
@@ -94,7 +94,7 @@ function processDoc(opts) {
       angularAnimate: true,
       marked: true
     }, opts.loadDefaults);
-    
+
   if (options.scripts && !(options.scripts instanceof Array)) {
     options.scripts = [options.scripts];
   }
@@ -110,7 +110,7 @@ function processDoc(opts) {
       'marked/lib/marked.js'
     ]
   };
-  
+
   //Sets default script paths
   function joinNodeModules(jsPaths){
     _.each(jsPaths, function(jsPath){
@@ -141,7 +141,11 @@ function processDoc(opts) {
         };
 
     // create index.html
-    content = fs.readFileSync(path.resolve(templates, 'index.tmpl'), 'utf8');
+    var index = path.resolve(templates, 'index.tmpl');
+    if (options.template && path.resolve(options.template)) {
+      index = options.template;
+    }
+    content = fs.readFileSync(index, 'utf8');
     content = _.template(content, data);
     docsStream.push(new File({
       base: fakeDest,
@@ -250,7 +254,7 @@ function processDoc(opts) {
   var docsStreamEndCb = false;
   if (options.navTemplate) {
     options.navContent = _.template(
-      fs.readFileSync(options.navTemplate, 'utf8'), 
+      fs.readFileSync(options.navTemplate, 'utf8'),
       options.navTemplateData);
   }
 
@@ -275,7 +279,7 @@ function processDoc(opts) {
 
   _.forEach(defaultScripts, function (script, i) {
     var fileName = path.normalize(script).split('/').pop();
-    if (scriptNames.indexOf(fileName) === -1) {    
+    if (scriptNames.indexOf(fileName) === -1) {
       fstreams.push(streamFile(script, 'js', fakeDest));
       options.scripts.splice(i, 0, path.join('js', fileName));
     }
