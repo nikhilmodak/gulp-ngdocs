@@ -9,11 +9,6 @@
   line-height: 18px
 }
 
-.navbar img {
-  max-height: 40px;
-  padding-right: 20px;
-}
-
 .navbar img+.brand {``
   padding: 10px 20px 10px 10px;
 }
@@ -39,10 +34,6 @@
 }
 
 /* =============================== */
-
-.form-search {
-  margin-right: 10px;
-}
 
 .form-search .dropdown-menu {
   width: 100%;
