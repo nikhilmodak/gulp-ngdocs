@@ -134,20 +134,14 @@ a:hover, a:focus {
   color: #b86900;
 }
 
-.navbar-search {
-  display: inline-block;
-  float: left;
-  width: 300px;
-  margin-right: 20px;
-  padding-top: 10px;
+
+.match > a, .
+nav > .match > a:hover {
+	background-color: #5f2b5d; /* PD PURPLE */
 }
 
-.match > a, .nav > .match > a:hover {
-	background-color: #5f2b5d;
-}
-
-.navbar-search input {
-  border: 0;
+.input-search {
+  margin-bottom: 60px;
 }
 
 .navbar-brand {
@@ -162,6 +156,9 @@ a:hover, a:focus {
 
 .type-hint-promise {
   background-color: #ff9406; /* PD ORANGE */
+}
+.type-hint-expression {
+  background-color: #5f2b5d; /* PD PURPLE */
 }
 
 .navbar-default .navbar-nav > .active > a,

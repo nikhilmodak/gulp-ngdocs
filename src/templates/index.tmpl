@@ -90,23 +90,13 @@
 
     <form ng-submit="submitForm()" class="form-search">
 
-      <!-- <% if (image) { %>
-        <% if (imageLink) { %>
-          <a class="logo-link" href="/">
-        <% } %>
-          <img class="img-logo" src="<%= image %>">
-        <% if (imageLink) { %>
-          </a>
-        <% } %>
-      <% } %> -->
-
       <!-- SEARCH box -->
       <div class="form-group">
         <% if (bestMatch) { %>
         <div class="dropdown search"
              ng-class="{open: focused && bestMatch.rank > 0 && bestMatch.page != currentPage}">
           <input type="text" ng-model="search" placeholder="search"
-                 tabindex="1" accesskey="s" class="form-control" focused="focused">
+                 tabindex="1" accesskey="s" class="form-control input-search" focused="focused">
           <ul class="dropdown-menu">
             <li>
               <a href="{{bestMatch.page.url}}">{{bestMatch.page.shortName}}</a>
