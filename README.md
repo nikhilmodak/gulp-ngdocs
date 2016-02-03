@@ -91,6 +91,27 @@ gulp.task('ngdocs', [], function () {
   }).pipe(gulpDocs.process(options)).pipe(gulp.dest('./docs'));
 });
 ```
+#### Serving index.html file
+
+Opening *index.html* file via **file://** protocol will cause a number of troubles.
+The easier way to avoid it is to run local server.
+As an options you can use [gulp-connect](https://www.npmjs.com/package/gulp-connect)
+```
+npm install gulp-connect
+```
+
+```
+gulp.task('connect_ngdocs', function() {
+var connect = require('gulp-connect');
+  connect.server({
+    root: 'docs',
+    livereload: false,
+    fallback: 'docs/index.html',
+    port: 8083
+  });
+});
+```
+
 ###Doc comment example
 
 A doc comment looks like this:
