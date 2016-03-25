@@ -461,6 +461,8 @@ Doc.prototype = {
         } else if(atName == 'eventType') {
           match = text.match(/(broadcast|emit)/);
           self.type = match[1];
+        } else if(atName == 'constructor') {
+          self.constructor = true;
         } else {
           self[atName] = text;
         }
@@ -656,6 +658,9 @@ Doc.prototype = {
 
     dom.h('Usage', function() {
       dom.code(function() {
+        if (self.constructor) {
+          dom.text('new ');
+        }
         dom.text(name.split(':').pop());
         dom.text('(');
         self.parameters(dom, ', ');
