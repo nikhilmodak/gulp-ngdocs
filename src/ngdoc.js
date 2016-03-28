@@ -462,7 +462,7 @@ Doc.prototype = {
           match = text.match(/(broadcast|emit)/);
           self.type = match[1];
         } else if(atName == 'constructor') {
-          self.constructor = true;
+          self.functionIsConstructor = true;
         } else {
           self[atName] = text;
         }
@@ -658,7 +658,7 @@ Doc.prototype = {
 
     dom.h('Usage', function() {
       dom.code(function() {
-        if (self.constructor) {
+        if (self.functionIsConstructor) {
           dom.text('new ');
         }
         dom.text(name.split(':').pop());
