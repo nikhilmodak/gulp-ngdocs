@@ -29,12 +29,13 @@
       addTag('link', {rel: 'stylesheet', href: 'css/prettify.css', type: 'text/css'});
       addTag('link', {rel: 'stylesheet', href: 'https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css', type: 'text/css'});
       addTag('link', {rel: 'stylesheet', href: 'css/docs.css', type: 'text/css'});
-      addTag('link', {rel: 'stylesheet', href: 'css/pd-custom.css', type: 'text/css'});
       addTag('link', {rel: 'stylesheet', href: 'css/animations.css', type: 'text/css'});
 
       <% _.forEach(styles, function(url) { %>
          addTag('link', {rel: 'stylesheet', href: '<%= url %>', type: 'text/css'}, sync);
       <% }); %>
+
+      addTag('link', {rel: 'stylesheet', href: 'css/pd-custom.css', type: 'text/css'});
 
       <% _.forEach(scripts, function(url) { %>
         addTag('script', {src: '<%= url %>'}, sync);

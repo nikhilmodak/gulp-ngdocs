@@ -1,7 +1,7 @@
 'use strict';
 
 /**
-  * @ngdoc servicesdfasdf
+  * @ngdoc services
   * @name foo
   * @description Malformed docblock
 **/

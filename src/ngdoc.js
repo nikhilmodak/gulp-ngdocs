@@ -981,17 +981,22 @@ function title(doc) {
     // Makes title markup.
     // makeTitle('Foo', 'directive', 'module', 'ng') ->
     //    Foo is a directive in module ng
-    return function () {
-      this.tag('code', name);
-      this.tag('div', function () {
-        this.tag('span', {class: 'hint'}, function () {
-          if (type && component) {
-            this.text(type + ' in ' + componentType + ' ');
-            this.tag('code', component);
-          }
-        });
-      });
-    };
+    if ( name ) {
+        return function () {
+          this.tag('code', name);
+          this.tag('div', function () {
+            this.tag('span', {class: 'hint'}, function () {
+              if (type && component) {
+                this.text(type + ' in ' + componentType + ' ');
+                this.tag('code', component);
+              }
+            });
+          });
+        };
+    } else {
+        return;
+    }
+
   };
 
   if (doc.ngdoc === 'error') {
