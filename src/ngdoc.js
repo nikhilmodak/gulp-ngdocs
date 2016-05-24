@@ -470,6 +470,9 @@ Doc.prototype = {
           self.properties.push(property);
         } else if(atName == 'eventType') {
           match = text.match(/(broadcast|emit)/);
+          if (!match || match.length === 0) {
+            throw new Error("Not a valid 'eventType' format" + text + " (found in: " + self.file + ":" + self.line + ")");
+          }
           self.type = match[1];
         } else if(atName == 'constructor') {
           self.constructor = true;
