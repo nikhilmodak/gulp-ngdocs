@@ -1,12 +1,12 @@
 {
-  "name": "gulp-ngdocs",
+  "name": "sigma-gulp-ngdocs",
   "version": "0.2.13",
-  "author": "nikhilmodak",
-  "description": "gulp plugin for angularjs documentation",
+  "author": "nikhilmodak, Dan Young",
+  "description": "Fork of the gulp-ngdoc plugin",
   "main": "index",
   "repository": {
     "type": "git",
-    "url": "https://github.com/nikhilmodak/gulp-ngdocs.git"
+    "url": "https://github.com/Joraz/sigma-gulp-ngdocs"
   },
   "keywords": [
     "gulpplugin",
