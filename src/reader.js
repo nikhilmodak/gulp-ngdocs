@@ -13,11 +13,7 @@ function process(content, file, section, options) {
   // console.log('-section-----\n' + section)
   // console.log('-options-----\n' + JSON.stringify(options, null, 2))
   // console.log('')
-  if (/\.js$/.test(file)) {
-    processJsFile(content, file, section, options).forEach(function(doc) {
-      exports.docs.push(doc);
-    });
-  } else if (/\.ts$/.test(file)) {
+  if (/(\.js|\.ts)$/.test(file)) {
     processJsFile(content, file, section, options).forEach(function(doc) {
       exports.docs.push(doc);
     });
