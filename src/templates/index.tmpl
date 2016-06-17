@@ -18,7 +18,7 @@
     // before the base attribute is added, causing 404 and terribly slow loading of the docs app.
     (function() {
       var indexFile = (location.pathname.match(/\/(index[^\.]*\.html)/) || ['', ''])[1],
-          rUrl = /(#!\/|<%= sections %>|index[^\./]*\.html).*$/,
+          rUrl = /(#!\/|<%= sections %>|index[^\.]*\.html).*$/,
           origin = location.origin || (window.location.protocol + "//" + window.location.hostname + (window.location.port ? ':' + window.location.port: '')),
           baseUrl = origin + location.href.substr(origin.length).replace(rUrl, indexFile),
           headEl = document.getElementsByTagName('head')[0],
@@ -26,6 +26,7 @@
 
       addTag('base', {href: baseUrl});
       addTag('link', {rel: 'stylesheet', href: 'css/bootstrap.min.css', type: 'text/css'});
+      //addTag('link', {rel: 'stylesheet', href: 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css', type: 'text/css'});
       addTag('link', {rel: 'stylesheet', href: 'css/font-awesome.css', type: 'text/css'});
       addTag('link', {rel: 'stylesheet', href: 'css/prettify.css', type: 'text/css'});
       addTag('link', {rel: 'stylesheet', href: 'css/docs.css', type: 'text/css'});
@@ -115,7 +116,7 @@
     <div class="row clear-navbar"></div>
 
     <div class="row">
-      <div class="span12">
+      <div class="col-xs-12">
         <!--[if lt IE 7]>
         <p class="alert alert-error">Your browser is <em>ancient!</em>
           <a href="http://browsehappy.com/">Upgrade to a different browser</a> or
@@ -136,7 +137,7 @@
     </div>
 
     <div class="row">
-      <div class="span3">
+      <div class="col-xs-3">
         <form class="form-search" ng-submit="submitForm()">
           <% if (bestMatch) { %>
           <div class="dropdown search"
@@ -219,7 +220,7 @@
 
         </form>
       </div>
-      <div class="span9">
+      <div class="col-xs-9">
 
         <ul class="breadcrumb">
           <li ng-repeat="crumb in breadcrumb">
