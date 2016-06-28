@@ -107,7 +107,7 @@ function processDoc(opts) {
   //Default root paths for scripts
   var scriptPaths = {
     angular : [
-      'angular/angular.min.js'
+      'angular/angular.js'
     ],
     angularAnimate: [
       'angular-animate/angular-animate.js',
