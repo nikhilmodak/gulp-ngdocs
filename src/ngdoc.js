@@ -536,7 +536,7 @@ Doc.prototype = {
       });
 
       (self['html_usage_' + self.ngdoc] || function() {
-        throw new Error("Don't know how to format @ngdoc: " + self.ngdoc);
+        throw new Error("Don't know how to format @ngdoc: " + self.ngdoc +"\n Issue is located in file: "+self.file+"\n Line #: "+self.line);
       }).call(self, dom);
 
       dom.h('Example', self.example, dom.html);
