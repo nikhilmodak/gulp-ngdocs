@@ -39,7 +39,7 @@ gulp.task('ngdocs', [], function () {
 });
 ```
 
-To use a different AngularJS version pass `angular` and `angular-animate` files in scripts.
+Please specify you own version of angular and angular-animate. They will not be included by default.
 
 ```js
 gulp.task('ngdocs', [], function () {
@@ -53,20 +53,6 @@ gulp.task('ngdocs', [], function () {
       'bower_components/angular-animate/angular-animate.min.js.map'
     ]
   }
-
-  /*
-  If you choose to use the remote links pass in the .min.js links for angular and angular-animate
-
-  var options = {
-    scripts: [
-      'http://ajax.googleapis.com/ajax/libs/angularjs/<version>/angular.min.js',
-      'http://ajax.googleapis.com/ajax/libs/angularjs/<version>/angular-animate.min.js'
-    ]
-  }
-  */
-  return gulp.src('path/to/src/*.js')
-    .pipe(gulpDocs.process(options))
-    .pipe(gulp.dest('./docs'));
 });
 ```
 
