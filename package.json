@@ -32,11 +32,14 @@
     "vinyl-fs": "0.3.7"
   },
   "devDependencies": {
+    "coveralls": "^2.11.4",
     "del": "^1.1.1",
     "gulp": "^3.8.10",
+    "istanbul": "^0.3.18",
     "jasmine-node": "^1.14.5"
   },
   "scripts": {
-    "test": "jasmine-node --color spec"
+    "test": "istanbul cover --include-all-sources jasmine-node --color spec",
+    "coveralls": "cat ./coverage/lcov/lcov.info | ./node_modules/.bin/coveralls"
   }
 }

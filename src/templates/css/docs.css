@@ -266,9 +266,14 @@ ul.events > li > h3 {
   vertical-align:top;
   padding:5px;
 }
+.variables-matrix p {
+  margin-bottom: 0;
+  margin-left: 10px;
+}
 
 .type-hint {
   display:inline-block;
+  background: #999;
 }
 
 .variables-matrix .type-hint {

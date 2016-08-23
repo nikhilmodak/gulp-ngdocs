@@ -1,5 +1,10 @@
-gulp-ngdocs
-===========
+[![npm version][npm-image]][npm-url]
+[![Build Status][travis-image]][travis-url]
+[![Test coverage][coveralls-image]][coveralls-url]
+[![License][license-image]][license-url]
+[![Downloads][downloads-image]][downloads-url]
+
+#gulp-ngdocs
 
 Gulp plugin for building [AngularJS](http://docs.angularjs.org) like documentation. This is inspired from [grunt-ngdocs](https://www.npmjs.org/package/grunt-ngdocs).
 
@@ -250,3 +255,14 @@ var opts = {
 ###api
 
 [default] `true` Set the name for the section in the documentation app.
+
+[npm-image]:       https://img.shields.io/npm/v/gulp-ngdocs.svg?style=flat-square
+[travis-image]:    https://img.shields.io/travis/nikhilmodak/gulp-ngdocs.svg?style=flat-square
+[coveralls-image]: https://img.shields.io/coveralls/nikhilmodak/gulp-ngdocs.svg?style=flat-square
+[license-image]:   https://img.shields.io/npm/l/gulp-ngdocs.svg?style=flat-square
+[downloads-image]: https://img.shields.io/npm/dm/gulp-ngdocs.svg?style=flat-square
+[npm-url]:         https://npmjs.org/package/gulp-ngdocs
+[travis-url]:      https://travis-ci.org/nikhilmodak/gulp-ngdocs
+[coveralls-url]:   https://coveralls.io/r/nikhilmodak/gulp-ngdocs?branch=master
+[license-url]:     LICENSE
+[downloads-url]:   https://npmjs.org/package/gulp-ngdocs
