@@ -281,6 +281,9 @@ docsApp.controller.DocsController = function($scope, $location, $window, section
     loadDisqus(currentPageId);
   };
 
+  $scope.hideMenu = function(toggleId){
+      document.getElementById(toggleId).classList.toggle('api');
+  }
 
   /**********************************
    Watches
