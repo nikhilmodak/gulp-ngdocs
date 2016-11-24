@@ -444,7 +444,11 @@ Doc.prototype = {
         } else if (atName == 'returns' || atName == 'return') {
           match = text.match(/^\{([^}]+)\}\s+(.*)/);
           if (!match) {
-            throw new Error("Not a valid 'returns' format: " + text + ' (found in: ' + self.file + ':' + self.line + ')');
+            match = text.match(/^\{([^}]+)\}$/);
+              if (!match) {
+                throw new Error("Not a valid 'returns' format: " + text + ' (found in: ' + self.file + ':' + self.line + ')');
+              }
+            match[2] = '';
           }
           self.returns = {
             type: match[1],
@@ -470,6 +474,9 @@ Doc.prototype = {
           self.properties.push(property);
         } else if(atName == 'eventType') {
           match = text.match(/(broadcast|emit)/);
+          if (!match || match.length === 0) {
+            throw new Error("Not a valid 'eventType' format: " + text + " (found in: " + self.file + ":" + self.line + ")");
+          }
           self.type = match[1];
         } else if(atName == 'constructor') {
           self.constructor = true;
@@ -927,7 +934,14 @@ Doc.prototype = {
       dom.div({class:'member property'}, function(){
         dom.h('Properties', self.properties, function(property){
           dom.h(property.shortName, function() {
+            if (property.type)
+            {
+              dom.html('<a href="" class="' + self.prepare_type_hint_class_name(property.type) + '">');
+              dom.text(property.type);
+              dom.html('</a>');
+            }
             dom.html(property.description);
+
             if (!property.html_usage_returns) {
               console.log(property);
             }
