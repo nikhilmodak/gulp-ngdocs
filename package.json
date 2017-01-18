@@ -1,22 +1,59 @@
 {
-  "name": "gulp-ngdocs",
-  "version": "0.2.13",
-  "author": "nikhilmodak",
-  "description": "gulp plugin for angularjs documentation",
-  "main": "index",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/nikhilmodak/gulp-ngdocs.git"
-  },
-  "keywords": [
-    "gulpplugin",
-    "angular",
-    "gulp",
-    "ngdocs",
-    "documention"
+  "_args": [
+    [
+      "https://github.com/SmarTi01/gulp-ngdocs.git",
+      "C:\\Projects\\NG-Consolidated-Dashboard\\US\\dashboard"
+    ]
   ],
-  "license": "MIT",
-  "readmeFilename": "README.md",
+  "_from": "git+https://github.com/SmarTi01/gulp-ngdocs.git",
+  "_id": "gulp-ngdocs@0.2.13",
+  "_inCache": true,
+  "_installable": true,
+  "_location": "/gulp-ngdocs",
+  "_phantomChildren": {
+    "chalk": "0.5.1",
+    "core-util-is": "1.0.2",
+    "dateformat": "1.0.12",
+    "inherits": "2.0.1",
+    "lodash": "2.4.1",
+    "lodash._reinterpolate": "2.4.1",
+    "lodash.template": "2.4.1",
+    "minimist": "0.2.0",
+    "multipipe": "0.1.2",
+    "string_decoder": "0.10.31",
+    "vinyl": "0.2.3"
+  },
+  "_requested": {
+    "hosted": {
+      "directUrl": "https://raw.githubusercontent.com/SmarTi01/gulp-ngdocs/master/package.json",
+      "gitUrl": "git://github.com/SmarTi01/gulp-ngdocs.git",
+      "httpsUrl": "git+https://github.com/SmarTi01/gulp-ngdocs.git",
+      "shortcut": "github:SmarTi01/gulp-ngdocs",
+      "ssh": "git@github.com:SmarTi01/gulp-ngdocs.git",
+      "sshUrl": "git+ssh://git@github.com/SmarTi01/gulp-ngdocs.git",
+      "type": "github"
+    },
+    "name": null,
+    "raw": "https://github.com/SmarTi01/gulp-ngdocs.git",
+    "rawSpec": "https://github.com/SmarTi01/gulp-ngdocs.git",
+    "scope": null,
+    "spec": "git+https://github.com/SmarTi01/gulp-ngdocs.git",
+    "type": "hosted"
+  },
+  "_requiredBy": [
+    "#DEV:/"
+  ],
+  "_resolved": "git+https://github.com/SmarTi01/gulp-ngdocs.git#d2ba8d450ed070b4ced8a8c8f6f0e8283faf7d97",
+  "_shasum": "36ea3a56ac2234b6781a7d818368a50938434269",
+  "_shrinkwrap": null,
+  "_spec": "https://github.com/SmarTi01/gulp-ngdocs.git",
+  "_where": "C:\\Projects\\NG-Consolidated-Dashboard\\US\\dashboard",
+  "author": {
+    "name": "nikhilmodak"
+  },
+  "bugs": {
+    "url": "https://github.com/nikhilmodak/gulp-ngdocs/issues"
+  },
   "dependencies": {
     "angular": "~1.3.1",
     "angular-animate": "~1.3.1",
@@ -31,12 +68,33 @@
     "through2": "0.6.1",
     "vinyl-fs": "0.3.7"
   },
+  "description": "gulp plugin for angularjs documentation",
   "devDependencies": {
     "del": "^1.1.1",
     "gulp": "^3.8.10",
     "jasmine-node": "^1.14.5"
   },
+  "gitHead": "d2ba8d450ed070b4ced8a8c8f6f0e8283faf7d97",
+  "homepage": "https://github.com/nikhilmodak/gulp-ngdocs#readme",
+  "keywords": [
+    "gulpplugin",
+    "angular",
+    "gulp",
+    "ngdocs",
+    "documention"
+  ],
+  "license": "MIT",
+  "main": "index",
+  "name": "gulp-ngdocs",
+  "optionalDependencies": {},
+  "readme": "gulp-ngdocs\r\n===========\r\n\r\nGulp plugin for building [AngularJS](http://docs.angularjs.org) like documentation. This is inspired from [grunt-ngdocs](https://www.npmjs.org/package/grunt-ngdocs).\r\n\r\n##Setup\r\n\r\n`npm install gulp-ngdocs --save-dev`\r\n\r\n##Usage\r\n\r\nCreate a `ngdocs` gulp task\r\n\r\n```js\r\ngulp.task('ngdocs', [], function () {\r\n  var gulpDocs = require('gulp-ngdocs');\r\n  return gulp.src('path/to/src/*.js')\r\n    .pipe(gulpDocs.process())\r\n    .pipe(gulp.dest('./docs'));\r\n});\r\n```\r\nCreate a `ngdocs` gulp task with options\r\n\r\n```js\r\ngulp.task('ngdocs', [], function () {\r\n  var gulpDocs = require('gulp-ngdocs');\r\n  var options = {\r\n    scripts: ['../app.min.js'],\r\n    html5Mode: true,\r\n    startPage: '/api',\r\n    title: \"My Awesome Docs\",\r\n    image: \"path/to/my/image.png\",\r\n    imageLink: \"http://my-domain.com\",\r\n    titleLink: \"/api\"\r\n  }\r\n  return gulp.src('path/to/src/*.js')\r\n    .pipe(gulpDocs.process(options))\r\n    .pipe(gulp.dest('./docs'));\r\n});\r\n```\r\n\r\nTo use a different AngularJS version pass `angular` and `angular-animate` files in scripts.\r\n\r\n```js\r\ngulp.task('ngdocs', [], function () {\r\n  var gulpDocs = require('gulp-ngdocs');\r\n  var options = {\r\n    /* pass both .min.js and .min.js.map files for angular and angular-animate */\r\n    scripts: [\r\n      'bower_components/angular/angular.min.js',\r\n      'bower_components/angular/angular.min.js.map',\r\n      'bower_components/angular-animate/angular-animate.min.js',\r\n      'bower_components/angular-animate/angular-animate.min.js.map'\r\n    ]\r\n  }\r\n\r\n  /*\r\n  If you choose to use the remote links pass in the .min.js links for angular and angular-animate\r\n\r\n  var options = {\r\n    scripts: [\r\n      'http://ajax.googleapis.com/ajax/libs/angularjs/<version>/angular.min.js',\r\n      'http://ajax.googleapis.com/ajax/libs/angularjs/<version>/angular-animate.min.js'\r\n    ]\r\n  }\r\n  */\r\n  return gulp.src('path/to/src/*.js')\r\n    .pipe(gulpDocs.process(options))\r\n    .pipe(gulp.dest('./docs'));\r\n});\r\n```\r\n\r\nIf you would like to divide your documentation into different sections, use `gulpDocs.sections` instead of `gulp.src`.\r\n\r\n```js\r\ngulp.task('ngdocs', [], function () {\r\n  var gulpDocs = require('gulp-ngdocs');\r\n  var options = {\r\n    //options\r\n  }\r\n  return gulpDocs.sections({\r\n    api: {\r\n      glob:['src/**/*.js', '!src/**/*.spec.js'],\r\n      api: true,\r\n      title: 'API Documentation'\r\n    },\r\n    tutorial: {\r\n      glob: ['content/tutorial/*.ngdoc'],\r\n      title: 'Tutorial'\r\n    }\r\n  }).pipe(gulpDocs.process(options)).pipe(gulp.dest('./docs'));\r\n});\r\n```\r\n#### Serving index.html file\r\n\r\nOpening *index.html* file via **file://** protocol will cause a number of troubles.\r\nThe easier way to avoid it is to run local server.\r\nAs an options you can use [gulp-connect](https://www.npmjs.com/package/gulp-connect)\r\n```\r\nnpm install gulp-connect\r\n```\r\n\r\n```\r\ngulp.task('connect_ngdocs', function() {\r\nvar connect = require('gulp-connect');\r\n  connect.server({\r\n    root: 'docs',\r\n    livereload: false,\r\n    fallback: 'docs/index.html',\r\n    port: 8083\r\n  });\r\n});\r\n```\r\n\r\n###Doc comment example\r\n\r\nA doc comment looks like this:\r\n```js\r\n/**\r\n * @ngdoc directive\r\n * @name rfx.directive:rAutogrow\r\n * @element textarea\r\n * @function\r\n *\r\n * @description\r\n * Resize textarea automatically to the size of its text content.\r\n *\r\n * **Note:** ie<9 needs polyfill for window.getComputedStyle\r\n *\r\n * @example\r\n   <example module=\"rfx\">\r\n     <file name=\"index.html\">\r\n         <textarea ng-model=\"text\"rx-autogrow class=\"input-block-level\"></textarea>\r\n         <pre>{{text}}</pre>\r\n     </file>\r\n   </example>\r\n */\r\nangular.module('rfx', []).directive('rAutogrow', function() {\r\n  //some nice code\r\n});\r\n```\r\n\r\nCheck out the [Writing AngularJS documentation wiki article](https://github.com/angular/angular.js/wiki/Writing-AngularJS-Documentation) to see what's possible,\r\nor take a look at the [AngularJS source code](https://github.com/angular/angular.js/tree/master/src/ng) for more examples.\r\n\r\n##Options\r\n\r\n####scripts\r\nSet additional custom JS files are loaded to the app. This allows the live examples to use custom directives, services, etc. The documentation app works with AngularJS 1.2+ and 1.3+. If you include a different version of AngularJS, make sure to include angular-animate.js as well.\r\n\r\nPossible values:\r\n\r\n  - `['path/to/file.js']` file will be copied into the docs, into a `js` folder\r\n  - `['http://example.com/file.js', 'https://example.com/file.js', '//example.com/file.js']` reference remote files (eg from a CDN)\r\n  - `['../app.js']` reference file relative to the dest folder\r\n\r\n####styles\r\n[default] `[]`\r\nCopy additional css files to the documentation app\r\n\r\n####analytics\r\nOptional include Google Analytics in the documentation app.\r\n\r\nExample usage:\r\n\r\n```js\r\nvar opts = {\r\n  analytics: {\r\n    account: 'UA-XXXXXX-YY',\r\n    domainName: 'http://mywebpage.com/'\r\n  }\r\n};\r\n```\r\n\r\n####discussions\r\nOptional include [discussions](http://disqus.com) in the documentation app.\r\n\r\n####editExample\r\n[default] `true`\r\nShow Edit Button for examples.\r\n\r\n####title\r\n[default] `\"API Documentation\"`\r\nTitle to put on the navbar and the page's `title` attribute.\r\n\r\n####startPage\r\n[default] `'/api'`\r\nSet first page to open.\r\n\r\n####html5Mode\r\n[default] `true`\r\nWhether or not to enable `html5Mode` in the docs application.  If true, then links will be absolute.  If false, they will be prefixed by `#/`.\r\n\r\n####image\r\nA URL or relative path to an image file to use in the top navbar.\r\n\r\n####titleLink\r\n[default] no anchor tag is used\r\nWraps the title text in an anchor tag with the provided URL.\r\n\r\n####imageLink\r\n[default] no anchor tag is used\r\nWraps the navbar image in an anchor tag with the provided URL.\r\n\r\n####bestMatch\r\n[default] `false`\r\nThe best matching page for a search query is highlighted and get selected on return.\r\nIf this option is set to true the best match is shown below the search field in an dropdown menu. Use this for long lists where the highlight is often not visible.\r\n\r\n####navTemplate\r\n[default] `null`\r\nPath to a template of a nav HTML template to include.  The css for it\r\nshould be that of listitems inside a bootstrap navbar:\r\n```html\r\n<header class=\"header\">\r\n  <div class=\"navbar\">\r\n    <ul class=\"nav\">\r\n      {{links to all the docs pages}}\r\n    </ul>\r\n    {{YOUR_NAV_TEMPLATE_GOES_HERE}}\r\n  </div>\r\n</header>\r\n```\r\nExample: 'templates/my-nav.html'\r\n\r\nThe template, if specified, is pre-processed using [_.template](http://lodash.com/docs#template).\r\n\r\n####loadDefaults\r\nUse this option to disable any of the four scripts `angular`, `angularAnimate`, `marked`, and `prettify` (google) which are loaded by default. This would give the user the ability to disable any scripts if they are using methods outside of regular angular/animate loading like browserify.\r\n\r\nExample usage:\r\n```js\r\nvar opts = {\r\n  loadDefaults: {\r\n    angularAnimate: false\r\n  }\r\n}\r\n```\r\n\r\n##Options for Sections\r\n\r\n####glob\r\n\r\n[required] glob pattern of files to parse for documentation comments.\r\n\r\n###title\r\n\r\n[default] name of the section. Set the title for the section in the documentation app.\r\n\r\n###api\r\n\r\n[default] `true` Set the name for the section in the documentation app.\r\n",
+  "readmeFilename": "README.md",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nikhilmodak/gulp-ngdocs.git"
+  },
   "scripts": {
     "test": "jasmine-node --color spec"
-  }
+  },
+  "version": "0.2.13"
 }
