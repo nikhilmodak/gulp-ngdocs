@@ -3,11 +3,11 @@ gulp-ngdocs
 
 Gulp plugin for building [AngularJS](http://docs.angularjs.org) like documentation. This is inspired from [grunt-ngdocs](https://www.npmjs.org/package/grunt-ngdocs).
 
-##Setup
+#Setup
 
 `npm install gulp-ngdocs --save-dev`
 
-##Usage
+#Usage
 
 Create a `ngdocs` gulp task
 
