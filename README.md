@@ -1,5 +1,5 @@
-gulp-ngdocs
-===========
+gulp-ngdocs (Archived)
+======================
 
 Gulp plugin for building [AngularJS](http://docs.angularjs.org) like documentation. This is inspired from [grunt-ngdocs](https://www.npmjs.org/package/grunt-ngdocs).
 

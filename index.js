@@ -215,7 +215,12 @@ function processDoc(opts) {
       if (!file.section) {
         file.section = defaultSection;
       }
-      reader.process(content, file.path, file.section, options);
+      try {
+        reader.process(content, file.path, file.section, options);
+      }
+      catch (readerError) {
+        this.emit('error', readerError.toString());
+      }
     }
     callback(null);
   }
@@ -243,7 +248,8 @@ function processDoc(opts) {
             var cause = docError.name + ': ' + docError.message,
                 placement = doc.file + ':' + doc.line,
                 message = cause + ' at ' + placement;
-            throw new Error(message);
+            // throw new Error(message);
+            this.emit('error', message);
           }
         });
 
